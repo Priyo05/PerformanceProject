@@ -1,0 +1,15 @@
+C:\Users\1913\Desktop\PerformanceProject\src\Performance.Business\bin\Debug\net8.0\Performance.Business.deps.json
+C:\Users\1913\Desktop\PerformanceProject\src\Performance.Business\bin\Debug\net8.0\Performance.Business.dll
+C:\Users\1913\Desktop\PerformanceProject\src\Performance.Business\bin\Debug\net8.0\Performance.Business.pdb
+C:\Users\1913\Desktop\PerformanceProject\src\Performance.Business\bin\Debug\net8.0\Performance.DataAccess.dll
+C:\Users\1913\Desktop\PerformanceProject\src\Performance.Business\bin\Debug\net8.0\Performance.DataAccess.pdb
+C:\Users\1913\Desktop\PerformanceProject\src\Performance.Business\obj\Debug\net8.0\Performance.Business.csproj.AssemblyReference.cache
+C:\Users\1913\Desktop\PerformanceProject\src\Performance.Business\obj\Debug\net8.0\Performance.Business.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\1913\Desktop\PerformanceProject\src\Performance.Business\obj\Debug\net8.0\Performance.Business.AssemblyInfoInputs.cache
+C:\Users\1913\Desktop\PerformanceProject\src\Performance.Business\obj\Debug\net8.0\Performance.Business.AssemblyInfo.cs
+C:\Users\1913\Desktop\PerformanceProject\src\Performance.Business\obj\Debug\net8.0\Performance.Business.csproj.CoreCompileInputs.cache
+C:\Users\1913\Desktop\PerformanceProject\src\Performance.Business\obj\Debug\net8.0\Performance.Business.csproj.CopyComplete
+C:\Users\1913\Desktop\PerformanceProject\src\Performance.Business\obj\Debug\net8.0\Performance.Business.dll
+C:\Users\1913\Desktop\PerformanceProject\src\Performance.Business\obj\Debug\net8.0\refint\Performance.Business.dll
+C:\Users\1913\Desktop\PerformanceProject\src\Performance.Business\obj\Debug\net8.0\Performance.Business.pdb
+C:\Users\1913\Desktop\PerformanceProject\src\Performance.Business\obj\Debug\net8.0\ref\Performance.Business.dll

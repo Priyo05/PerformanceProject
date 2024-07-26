@@ -1,0 +1,62 @@
+﻿@page "/login"
+@layout Components.Layout.LoginLayout
+@inject AuthService authservice
+
+<h3>Silakan Login</h3>
+
+<EditForm Model="loginViewModel" method="post" OnValidSubmit="HandleLogin">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div class="text_field mb-4">
+        <label for="username">Username</label>
+        <InputText id="username" class="form-control" @bind-Value="loginViewModel.Username" />
+    </div>
+    <div class="text_field mb-4">
+        <label for="password">Password</label>
+        <InputText id="password" type="password" class="form-control" @bind-Value="loginViewModel.Password" />
+    </div>
+    <div class="text_field mb-4">
+        <label for="role">Role</label>
+        <InputSelect class="form-control" @bind-Value="loginViewModel.Role">
+            <option value="">
+                Select Role
+            </option>
+            @foreach(var role in roles)
+            {
+                <option value="@role.Value">@role.Text</option>
+            }
+        </InputSelect>
+    </div>
+    <input type="submit" value="Login" class="btn btn-primary mb-4"/>
+
+    <NavLink class="nav-link" href="/register">
+        <span>Don't have an account? Register here</span>
+    </NavLink>
+
+</EditForm>
+
+@code {
+    private readonly LoginViewModel loginViewModel = new LoginViewModel();
+
+    private List<SelectListItem> roles = new List<SelectListItem>
+    {
+        new SelectListItem { Text = "Admin", Value = "Admin" },
+        new SelectListItem { Text = "Employee", Value = "Employee" }
+    };
+
+    private void HandleLogin()
+    {
+        try
+        {
+            var ticket = authservice.Login(loginViewModel);
+            // Handle successful login, e.g., redirect or store authentication ticket
+        }
+        catch (Exception ex)
+        {
+            // Handle login failure
+            Console.WriteLine(ex.Message);
+        }
+    }
+
+}

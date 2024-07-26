@@ -1,0 +1,14 @@
+C:\Users\1913\Desktop\PerformanceProject\src\Performance.DataAccess\bin\Debug\net8.0\Performance.DataAccess.deps.json
+C:\Users\1913\Desktop\PerformanceProject\src\Performance.DataAccess\bin\Debug\net8.0\Performance.DataAccess.runtimeconfig.json
+C:\Users\1913\Desktop\PerformanceProject\src\Performance.DataAccess\bin\Debug\net8.0\Performance.DataAccess.dll
+C:\Users\1913\Desktop\PerformanceProject\src\Performance.DataAccess\bin\Debug\net8.0\Performance.DataAccess.pdb
+C:\Users\1913\Desktop\PerformanceProject\src\Performance.DataAccess\obj\Debug\net8.0\Performance.DataAccess.csproj.AssemblyReference.cache
+C:\Users\1913\Desktop\PerformanceProject\src\Performance.DataAccess\obj\Debug\net8.0\Performance.DataAccess.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\1913\Desktop\PerformanceProject\src\Performance.DataAccess\obj\Debug\net8.0\Performance.DataAccess.AssemblyInfoInputs.cache
+C:\Users\1913\Desktop\PerformanceProject\src\Performance.DataAccess\obj\Debug\net8.0\Performance.DataAccess.AssemblyInfo.cs
+C:\Users\1913\Desktop\PerformanceProject\src\Performance.DataAccess\obj\Debug\net8.0\Performance.DataAccess.csproj.CoreCompileInputs.cache
+C:\Users\1913\Desktop\PerformanceProject\src\Performance.DataAccess\obj\Debug\net8.0\Performance.DataAccess.dll
+C:\Users\1913\Desktop\PerformanceProject\src\Performance.DataAccess\obj\Debug\net8.0\refint\Performance.DataAccess.dll
+C:\Users\1913\Desktop\PerformanceProject\src\Performance.DataAccess\obj\Debug\net8.0\Performance.DataAccess.pdb
+C:\Users\1913\Desktop\PerformanceProject\src\Performance.DataAccess\obj\Debug\net8.0\Performance.DataAccess.genruntimeconfig.cache
+C:\Users\1913\Desktop\PerformanceProject\src\Performance.DataAccess\obj\Debug\net8.0\ref\Performance.DataAccess.dll
