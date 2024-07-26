@@ -16,7 +16,7 @@ public class AuthRepository : IAuthRepository
         _context = context;
     }
 
-    public async Task Register(Profile profile,User user)
+    public void Register(Profile profile,User user)
     {
         _context.Users.Add(user);
         _context.Profiles.Add(profile);

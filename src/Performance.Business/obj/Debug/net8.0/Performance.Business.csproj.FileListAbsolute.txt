@@ -13,3 +13,4 @@ C:\Users\1913\Desktop\PerformanceProject\src\Performance.Business\obj\Debug\net8
 C:\Users\1913\Desktop\PerformanceProject\src\Performance.Business\obj\Debug\net8.0\refint\Performance.Business.dll
 C:\Users\1913\Desktop\PerformanceProject\src\Performance.Business\obj\Debug\net8.0\Performance.Business.pdb
 C:\Users\1913\Desktop\PerformanceProject\src\Performance.Business\obj\Debug\net8.0\ref\Performance.Business.dll
+C:\Users\1913\Desktop\PerformanceProject\src\Performance.Business\obj\Debug\net8.0\Performance.Business.sourcelink.json

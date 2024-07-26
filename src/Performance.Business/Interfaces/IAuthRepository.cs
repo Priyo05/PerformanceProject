@@ -8,5 +8,5 @@ using System.Threading.Tasks;
 namespace Performance.Business.Interfaces;
 public interface IAuthRepository
 {
-    public Task Register(Profile profile, User user);
+    public void Register(Profile profile, User user);
 }

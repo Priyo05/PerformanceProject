@@ -39,3 +39,16 @@ C:\Users\1913\Desktop\PerformanceProject\src\Performance.Web.Blazor\bin\Debug\ne
 C:\Users\1913\Desktop\PerformanceProject\src\Performance.Web.Blazor\obj\Debug\net8.0\Performance.Web.Blazor.csproj.AssemblyReference.cache
 C:\Users\1913\Desktop\PerformanceProject\src\Performance.Web.Blazor\obj\Debug\net8.0\Performance.Web.Blazor.csproj.CopyComplete
 C:\Users\1913\Desktop\PerformanceProject\src\Performance.Web.Blazor\bin\Debug\net8.0\BCrypt.Net-Next.dll
+C:\Users\1913\Desktop\PerformanceProject\src\Performance.Web.Blazor\obj\Debug\net8.0\Performance.Web.Blazor.sourcelink.json
+C:\Users\1913\Desktop\PerformanceProject\src\Performance.Web.Blazor\bin\Debug\net8.0\Microsoft.AspNetCore.Authorization.dll
+C:\Users\1913\Desktop\PerformanceProject\src\Performance.Web.Blazor\bin\Debug\net8.0\Microsoft.AspNetCore.Components.dll
+C:\Users\1913\Desktop\PerformanceProject\src\Performance.Web.Blazor\bin\Debug\net8.0\Microsoft.AspNetCore.Components.Forms.dll
+C:\Users\1913\Desktop\PerformanceProject\src\Performance.Web.Blazor\bin\Debug\net8.0\Microsoft.AspNetCore.Components.Web.dll
+C:\Users\1913\Desktop\PerformanceProject\src\Performance.Web.Blazor\bin\Debug\net8.0\Microsoft.AspNetCore.Components.WebAssembly.dll
+C:\Users\1913\Desktop\PerformanceProject\src\Performance.Web.Blazor\bin\Debug\net8.0\Microsoft.AspNetCore.Metadata.dll
+C:\Users\1913\Desktop\PerformanceProject\src\Performance.Web.Blazor\bin\Debug\net8.0\Microsoft.Extensions.Configuration.Binder.dll
+C:\Users\1913\Desktop\PerformanceProject\src\Performance.Web.Blazor\bin\Debug\net8.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+C:\Users\1913\Desktop\PerformanceProject\src\Performance.Web.Blazor\bin\Debug\net8.0\Microsoft.Extensions.Logging.Abstractions.dll
+C:\Users\1913\Desktop\PerformanceProject\src\Performance.Web.Blazor\bin\Debug\net8.0\Microsoft.Extensions.Options.dll
+C:\Users\1913\Desktop\PerformanceProject\src\Performance.Web.Blazor\bin\Debug\net8.0\Microsoft.JSInterop.dll
+C:\Users\1913\Desktop\PerformanceProject\src\Performance.Web.Blazor\bin\Debug\net8.0\Microsoft.JSInterop.WebAssembly.dll

@@ -16,8 +16,13 @@ public class AuthService
         _accountRepository = accountRepository;
     }
 
-    public async Task Register(RegisterViewModel registerViewModel)
+    public void Register(RegisterViewModel registerViewModel)
     {
+
+        if(registerViewModel.Department  == null)
+        {
+            throw new Exception("Data Tidak ada");
+        }
 
         Profile profile = new Profile
         {
@@ -38,7 +43,7 @@ public class AuthService
             CreatedAt = DateTime.Now
         };
 
-        await _accountRepository.Register(profile, user);
+        _accountRepository.Register(profile, user);
 
     }
 
