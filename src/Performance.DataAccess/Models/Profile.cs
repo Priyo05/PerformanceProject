@@ -21,9 +21,15 @@ public partial class Profile
 
     public DateTime? Birthdate { get; set; }
 
+    public virtual ICollection<Additionalindicator> Additionalindicators { get; set; } = new List<Additionalindicator>();
+
     public virtual ICollection<Anuallycompetence> Anuallycompetences { get; set; } = new List<Anuallycompetence>();
 
-    public virtual User User { get; set; } = null!;
+    public virtual ICollection<Basiccompetence> Basiccompetences { get; set; } = new List<Basiccompetence>();
+
+    public virtual ICollection<Responsibilityareaindicator> Responsibilityareaindicators { get; set; } = new List<Responsibilityareaindicator>();
+
+    public virtual ICollection<User> Users { get; set; } = new List<User>();
 
     public virtual ICollection<Workmainindicator> Workmainindicators { get; set; } = new List<Workmainindicator>();
 }

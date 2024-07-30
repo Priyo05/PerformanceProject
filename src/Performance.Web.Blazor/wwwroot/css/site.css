@@ -44,3 +44,30 @@ input[type="submit"]{
 
 }
 
+.performance-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+    .performance-table th, .performance-table td {
+        border: 1px solid #000;
+        padding: 8px;
+        text-align: center;
+    }
+
+    .performance-table thead th {
+        background-color: #337ab7;
+        color: #fff;
+        font-weight: bold;
+    }
+
+    .performance-table tfoot td {
+        font-weight: bold;
+    }
+
+    .performance-table .btn-primary {
+        margin-top: 20px;
+    }
+
+

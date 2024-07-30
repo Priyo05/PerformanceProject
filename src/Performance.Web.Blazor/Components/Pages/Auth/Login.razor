@@ -1,20 +1,22 @@
 ﻿@page "/login"
 @layout Components.Layout.LoginLayout
 @inject AuthService authservice
+@inject NavigationManager navigator
+
 
 <h3>Silakan Login</h3>
 
-<EditForm Model="loginViewModel" method="post" OnValidSubmit="HandleLogin">
-    <DataAnnotationsValidator />
-    <ValidationSummary />
+<EditForm Model="loginViewModel"  FormName="Login" OnValidSubmit="HandleLogin">
 
     <div class="text_field mb-4">
         <label for="username">Username</label>
         <InputText id="username" class="form-control" @bind-Value="loginViewModel.Username" />
+        <ValidationMessage For="() => loginViewModel.Username" />
     </div>
     <div class="text_field mb-4">
         <label for="password">Password</label>
         <InputText id="password" type="password" class="form-control" @bind-Value="loginViewModel.Password" />
+        <ValidationMessage For="() => loginViewModel.Password" />
     </div>
     <div class="text_field mb-4">
         <label for="role">Role</label>
@@ -27,17 +29,33 @@
                 <option value="@role.Value">@role.Text</option>
             }
         </InputSelect>
+        <ValidationMessage For="() => loginViewModel.Role" />
+    </div>
+    <div class="text-center mb-3">
+        <span class="text-danger">@errorMessage</span>
     </div>
     <input type="submit" value="Login" class="btn btn-primary mb-4"/>
 
+    <DataAnnotationsValidator />
+    @* <ValidationSummary/> *@
+    
     <NavLink class="nav-link" href="/register">
         <span>Don't have an account? Register here</span>
     </NavLink>
 
+
+
 </EditForm>
 
 @code {
-    private readonly LoginViewModel loginViewModel = new LoginViewModel();
+
+    [CascadingParameter]
+    public HttpContext? httpContext { get; set; }
+
+    [SupplyParameterFromForm(FormName ="Login")]
+    public LoginViewModel loginViewModel { get; set; } = new();
+
+    private string? errorMessage { get; set; }
 
     private List<SelectListItem> roles = new List<SelectListItem>
     {
@@ -45,18 +63,19 @@
         new SelectListItem { Text = "Employee", Value = "Employee" }
     };
 
-    private void HandleLogin()
+    private async Task HandleLogin()
     {
         try
         {
-            var ticket = authservice.Login(loginViewModel);
-            // Handle successful login, e.g., redirect or store authentication ticket
+            await authservice.Login(loginViewModel);
+            Console.WriteLine("Berhasil Login");
         }
         catch (Exception ex)
         {
-            // Handle login failure
-            Console.WriteLine(ex.Message);
+            errorMessage = ex.Message;
         }
+
+        await InvokeAsync(() => navigator.NavigateTo("/"));
     }
 
 }

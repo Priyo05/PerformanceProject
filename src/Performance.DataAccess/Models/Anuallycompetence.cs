@@ -7,12 +7,6 @@ public partial class Anuallycompetence
 {
     public int Id { get; set; }
 
-    public int BasiccompetencesId { get; set; }
-
-    public int ResponsibilityareaindicatorId { get; set; }
-
-    public int? AdditionalindicatorId { get; set; }
-
     public int Period { get; set; }
 
     public int UserId { get; set; }
@@ -35,11 +29,11 @@ public partial class Anuallycompetence
 
     public DateTime? AppraisalCommentDate { get; set; }
 
-    public virtual Additionalindicator? Additionalindicator { get; set; }
+    public virtual ICollection<Additionalindicator> Additionalindicators { get; set; } = new List<Additionalindicator>();
 
-    public virtual Basiccompetence Basiccompetences { get; set; } = null!;
+    public virtual ICollection<Basiccompetence> Basiccompetences { get; set; } = new List<Basiccompetence>();
 
-    public virtual Responsibilityareaindicator Responsibilityareaindicator { get; set; } = null!;
+    public virtual ICollection<Responsibilityareaindicator> Responsibilityareaindicators { get; set; } = new List<Responsibilityareaindicator>();
 
     public virtual Profile User { get; set; } = null!;
 

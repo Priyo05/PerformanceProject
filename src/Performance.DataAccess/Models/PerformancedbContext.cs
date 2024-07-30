@@ -37,7 +37,6 @@ public partial class PerformancedbContext : DbContext
 
     public virtual DbSet<Workmainindicator> Workmainindicators { get; set; }
 
-
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Additionalindicator>(entity =>
@@ -46,15 +45,22 @@ public partial class PerformancedbContext : DbContext
 
             entity.ToTable("additionalindicator");
 
-            entity.Property(e => e.Id)
-                .ValueGeneratedNever()
-                .HasColumnName("id");
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.AnuallycompetencesId).HasColumnName("anuallycompetences_id");
             entity.Property(e => e.CreatedAt)
                 .HasColumnType("timestamp without time zone")
                 .HasColumnName("created_at");
             entity.Property(e => e.IndikatorTotalValue).HasColumnName("indikator_total_value");
             entity.Property(e => e.Period).HasColumnName("period");
             entity.Property(e => e.UserId).HasColumnName("user_id");
+
+            entity.HasOne(d => d.Anuallycompetences).WithMany(p => p.Additionalindicators)
+                .HasForeignKey(d => d.AnuallycompetencesId)
+                .HasConstraintName("additionalindicator_anuallycompetences_id_fkey");
+
+            entity.HasOne(d => d.User).WithMany(p => p.Additionalindicators)
+                .HasForeignKey(d => d.UserId)
+                .HasConstraintName("additionalindicator_user_id_fkey");
         });
 
         modelBuilder.Entity<Anuallycompetence>(entity =>
@@ -63,10 +69,7 @@ public partial class PerformancedbContext : DbContext
 
             entity.ToTable("anuallycompetences");
 
-            entity.Property(e => e.Id)
-                .ValueGeneratedNever()
-                .HasColumnName("id");
-            entity.Property(e => e.AdditionalindicatorId).HasColumnName("additionalindicator_id");
+            entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.AppraisalApprovalDate)
                 .HasColumnType("timestamp without time zone")
                 .HasColumnName("appraisal_approval_date");
@@ -76,7 +79,6 @@ public partial class PerformancedbContext : DbContext
             entity.Property(e => e.AppraisalCommentDate)
                 .HasColumnType("timestamp without time zone")
                 .HasColumnName("appraisal_comment_date");
-            entity.Property(e => e.BasiccompetencesId).HasColumnName("basiccompetences_id");
             entity.Property(e => e.EmployeeApprovalDate)
                 .HasColumnType("timestamp without time zone")
                 .HasColumnName("employee_approval_date");
@@ -88,26 +90,11 @@ public partial class PerformancedbContext : DbContext
                 .HasColumnName("employee_comment_date");
             entity.Property(e => e.NilaiUntukKerjaTotalWorkmainindicator).HasColumnName("nilai_untuk_kerja_total_workmainindicator");
             entity.Property(e => e.Period).HasColumnName("period");
-            entity.Property(e => e.ResponsibilityareaindicatorId).HasColumnName("responsibilityareaindicator_id");
             entity.Property(e => e.SupervisorApprovalDate)
                 .HasColumnType("timestamp without time zone")
                 .HasColumnName("supervisor_approval_date");
             entity.Property(e => e.TotalNilaiAkhirTahun).HasColumnName("total_nilai_akhir_tahun");
             entity.Property(e => e.UserId).HasColumnName("user_id");
-
-            entity.HasOne(d => d.Additionalindicator).WithMany(p => p.Anuallycompetences)
-                .HasForeignKey(d => d.AdditionalindicatorId)
-                .HasConstraintName("anuallycompetences_additionalindicator_id_fkey");
-
-            entity.HasOne(d => d.Basiccompetences).WithMany(p => p.Anuallycompetences)
-                .HasForeignKey(d => d.BasiccompetencesId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("anuallycompetences_basiccompetences_id_fkey");
-
-            entity.HasOne(d => d.Responsibilityareaindicator).WithMany(p => p.Anuallycompetences)
-                .HasForeignKey(d => d.ResponsibilityareaindicatorId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("anuallycompetences_responsibilityareaindicator_id_fkey");
 
             entity.HasOne(d => d.User).WithMany(p => p.Anuallycompetences)
                 .HasForeignKey(d => d.UserId)
@@ -121,9 +108,7 @@ public partial class PerformancedbContext : DbContext
 
             entity.ToTable("aspek");
 
-            entity.Property(e => e.Id)
-                .ValueGeneratedNever()
-                .HasColumnName("id");
+            entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.AspekDescription)
                 .HasColumnType("character varying")
                 .HasColumnName("aspek_description");
@@ -146,9 +131,8 @@ public partial class PerformancedbContext : DbContext
 
             entity.ToTable("basiccompetences");
 
-            entity.Property(e => e.Id)
-                .ValueGeneratedNever()
-                .HasColumnName("id");
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.AnuallycompetencesId).HasColumnName("anuallycompetences_id");
             entity.Property(e => e.CountinousImprovement)
                 .HasColumnType("character varying")
                 .HasColumnName("countinous_improvement");
@@ -170,6 +154,14 @@ public partial class PerformancedbContext : DbContext
             entity.Property(e => e.WorkExcellent)
                 .HasColumnType("character varying")
                 .HasColumnName("work_excellent");
+
+            entity.HasOne(d => d.Anuallycompetences).WithMany(p => p.Basiccompetences)
+                .HasForeignKey(d => d.AnuallycompetencesId)
+                .HasConstraintName("basiccompetences_anuallycompetences_id_fkey");
+
+            entity.HasOne(d => d.User).WithMany(p => p.Basiccompetences)
+                .HasForeignKey(d => d.UserId)
+                .HasConstraintName("basiccompetences_user_id_fkey");
         });
 
         modelBuilder.Entity<Indicator>(entity =>
@@ -178,9 +170,7 @@ public partial class PerformancedbContext : DbContext
 
             entity.ToTable("indicator");
 
-            entity.Property(e => e.Id)
-                .ValueGeneratedNever()
-                .HasColumnName("id");
+            entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Additionalindicator).HasColumnName("additionalindicator");
             entity.Property(e => e.IndicatorName)
                 .HasColumnType("character varying")
@@ -201,9 +191,7 @@ public partial class PerformancedbContext : DbContext
 
             entity.ToTable("profile");
 
-            entity.Property(e => e.UserId)
-                .ValueGeneratedNever()
-                .HasColumnName("user_id");
+            entity.Property(e => e.UserId).HasColumnName("user_id");
             entity.Property(e => e.Birthdate)
                 .HasColumnType("timestamp without time zone")
                 .HasColumnName("birthdate");
@@ -225,11 +213,6 @@ public partial class PerformancedbContext : DbContext
             entity.Property(e => e.Title)
                 .HasColumnType("character varying")
                 .HasColumnName("title");
-
-            entity.HasOne(d => d.User).WithOne(p => p.Profile)
-                .HasForeignKey<Profile>(d => d.UserId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("profile_user_id_fkey");
         });
 
         modelBuilder.Entity<Responsibilityareaindicator>(entity =>
@@ -238,24 +221,29 @@ public partial class PerformancedbContext : DbContext
 
             entity.ToTable("responsibilityareaindicator");
 
-            entity.Property(e => e.Id)
-                .ValueGeneratedNever()
-                .HasColumnName("id");
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.AnuallycompetencesId).HasColumnName("anuallycompetences_id");
             entity.Property(e => e.CreatedAt)
                 .HasColumnType("timestamp without time zone")
                 .HasColumnName("created_at");
             entity.Property(e => e.NilaiUntukKerjaTotal).HasColumnName("nilai_untuk_kerja_total");
             entity.Property(e => e.Period).HasColumnName("period");
             entity.Property(e => e.UserId).HasColumnName("user_id");
+
+            entity.HasOne(d => d.Anuallycompetences).WithMany(p => p.Responsibilityareaindicators)
+                .HasForeignKey(d => d.AnuallycompetencesId)
+                .HasConstraintName("responsibilityareaindicator_anuallycompetences_id_fkey");
+
+            entity.HasOne(d => d.User).WithMany(p => p.Responsibilityareaindicators)
+                .HasForeignKey(d => d.UserId)
+                .HasConstraintName("responsibilityareaindicator_user_id_fkey");
         });
 
         modelBuilder.Entity<Role>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("Roles_pkey");
 
-            entity.Property(e => e.Id)
-                .ValueGeneratedNever()
-                .HasColumnName("id");
+            entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Name)
                 .HasColumnType("character varying")
                 .HasColumnName("name");
@@ -267,9 +255,7 @@ public partial class PerformancedbContext : DbContext
 
             entity.ToTable("subaspek");
 
-            entity.Property(e => e.Id)
-                .ValueGeneratedNever()
-                .HasColumnName("id");
+            entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.AspekId).HasColumnName("aspek_id");
             entity.Property(e => e.SubaspekAktual).HasColumnName("subaspek_aktual");
             entity.Property(e => e.SubaspekName)
@@ -284,23 +270,25 @@ public partial class PerformancedbContext : DbContext
 
         modelBuilder.Entity<User>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("users_pkey");
+            entity.HasKey(e => e.Username).HasName("users_pkey");
 
             entity.ToTable("users");
 
-            entity.Property(e => e.Id)
-                .ValueGeneratedNever()
-                .HasColumnName("id");
+            entity.Property(e => e.Username)
+                .HasColumnType("character varying")
+                .HasColumnName("username");
             entity.Property(e => e.CreatedAt)
                 .HasColumnType("timestamp without time zone")
                 .HasColumnName("created_at");
             entity.Property(e => e.Password)
                 .HasColumnType("character varying")
                 .HasColumnName("password");
+            entity.Property(e => e.ProfileId).HasColumnName("profile_id");
             entity.Property(e => e.Role).HasColumnName("role");
-            entity.Property(e => e.Username)
-                .HasColumnType("character varying")
-                .HasColumnName("username");
+
+            entity.HasOne(d => d.Profile).WithMany(p => p.Users)
+                .HasForeignKey(d => d.ProfileId)
+                .HasConstraintName("users_profile_id_fkey");
 
             entity.HasOne(d => d.RoleNavigation).WithMany(p => p.Users)
                 .HasForeignKey(d => d.Role)
@@ -313,9 +301,7 @@ public partial class PerformancedbContext : DbContext
 
             entity.ToTable("workmainindicator");
 
-            entity.Property(e => e.Id)
-                .ValueGeneratedNever()
-                .HasColumnName("id");
+            entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Aktual).HasColumnName("aktual");
             entity.Property(e => e.AnuallycompetencesId).HasColumnName("anuallycompetences_id");
             entity.Property(e => e.Bobot).HasColumnName("bobot");

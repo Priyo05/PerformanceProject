@@ -13,8 +13,8 @@ public static class Dependencies
 {
     public static void ConfigureServices(IConfiguration configuration, IServiceCollection services)
     {
-        services.AddDbContext<PerformancedbContext>(options
-            => options.UseNpgsql(configuration.GetConnectionString("performancedb"))
+        services.AddDbContext<PerformancedbContext>(options =>
+        options.UseNpgsql(configuration.GetConnectionString("PerformanceDb"))
         );
     }
 }

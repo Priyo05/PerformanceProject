@@ -1,0 +1,164 @@
+﻿@page "/indikatorutamakerja"
+@inject EmployeeService employeeService
+@inject ReportService reportService
+
+
+
+<div class="card">
+    <div class="card-header">
+        Masukan Employee
+    </div>
+    <EditForm Model="searchViewModel" FormName="Check" OnValidSubmit="CheckUser" class="form-control">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="text_field mb-2">
+                    <label for="name">name</label>
+                    <InputText id="name" class="form-control" @bind-Value="searchViewModel.Name" />
+                    <ValidationMessage For="() => searchViewModel.Name" />
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="text_field mb-2">
+                    <label for="NIK">NIK</label>
+                    <InputText id="NIK" class="form-control" @bind-Value="searchViewModel.NIK" />
+                    <ValidationMessage For="() => searchViewModel.NIK" />
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="text_field mb-2">
+                    <label for="department">Department</label>
+                    <InputText id="department" class="form-control" @bind-Value="searchViewModel.Department" />
+                    <ValidationMessage For="() => searchViewModel.Department" />
+                </div>
+            </div>
+        </div>
+        <DataAnnotationsValidator />
+        @* <ValidationSummary /> *@
+        <button type="submit" class="btn btn-primary mb-1">Search</button>
+    </EditForm>
+</div>
+
+@if (isUserChecked)
+{
+    @if (userExists)
+    {
+        <div class="alert alert-info mt-3">
+            Employee ada
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-danger mt-3">
+            @errorMessage
+        </div>
+    }
+}
+
+<div class="card mt-3">
+    <div class="card-header">
+        Masukan Periode
+    </div>
+    <EditForm Model="this.Periode" FormName="Report" OnValidSubmit="CheckReport" class="form-control">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="text_field mb-2">
+                    <label for="periode">Periode</label>
+                    <InputNumber id="periode" class="form-control" @bind-Value="this.Periode" />
+                </div>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary mb-1">Check Report</button>
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+    </EditForm>
+</div>
+
+@if (reportExists)
+{
+    <div class="alert alert-info mt-3">
+       Report sudah ada
+    </div>
+}
+else if (isReportChecked)
+{
+    <div class="alert alert-danger mt-3">
+        @errorMessage
+    </div>
+    <button class="btn btn-primary" @onclick="CreateReport">Buat Report</button>
+}
+
+
+
+
+
+
+
+@code {
+    [SupplyParameterFromForm(FormName = "Check")]
+    public EmployeeSearchViewModel searchViewModel { get; set; } = new ();
+
+    [SupplyParameterFromForm(FormName = "Report")]
+    public int Periode { get; set; }
+
+    private int userid { get; set; }
+    private bool userExists { get; set; }
+    private bool reportExists { get; set; }
+    private bool isUserChecked { get; set; }
+    private bool isReportChecked { get; set; }
+    private string? errorMessage { get; set; }
+
+    private void CheckUser()
+    {
+        try
+        {
+            var user = employeeService.GetUser(searchViewModel.Name, searchViewModel.NIK, searchViewModel.Department);
+            isUserChecked = true;
+            userid = user.UserId;
+
+            if (user != null)
+            {
+                userExists = true;
+            }
+            else
+            {
+                userExists = false;
+            }
+        }
+        catch (Exception ex)
+        {
+            isUserChecked = true;
+            userExists = false;
+            errorMessage = ex.Message;
+        }
+    }
+
+    private void CheckReport()
+    {
+        try
+        {
+            isReportChecked = true;
+            var mainReport = reportService.GetMainIndicatorReport(userid, Periode);
+
+            if (mainReport != null)
+            {
+                reportExists = true;
+            }
+            else
+            {
+                reportExists = false;
+            }
+
+        }
+        catch (Exception ex)
+        {
+            reportExists = false;
+            errorMessage = ex.Message;
+        }
+    }
+
+    private void CreateReport()
+    {
+        // Logika untuk membuat laporan baru
+        reportExists = true;
+    }
+}

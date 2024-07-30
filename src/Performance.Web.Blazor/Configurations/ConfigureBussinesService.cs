@@ -8,7 +8,10 @@ public static class ConfigureBussinesService
     {
 
         services.AddScoped<IAuthRepository, AuthRepository>();
-        
+        services.AddScoped<IEmployeeRespository, EmployeeRepository>();
+        services.AddScoped<IReportRepository, ReportRepository>();
+
+
         return services;
     }
 }

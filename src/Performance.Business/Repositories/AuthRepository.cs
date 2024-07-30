@@ -1,4 +1,5 @@
-﻿using Performance.Business.Interfaces;
+﻿using Microsoft.EntityFrameworkCore;
+using Performance.Business.Interfaces;
 using Performance.DataAccess.Models;
 using System;
 using System.Collections.Generic;
@@ -16,11 +17,28 @@ public class AuthRepository : IAuthRepository
         _context = context;
     }
 
-    public void Register(Profile profile,User user)
+    public void RegisterProfile(Profile profile)
     {
-        _context.Users.Add(user);
         _context.Profiles.Add(profile);
         _context.SaveChanges();
+    }
+
+    public void RegisterUser(User user)
+    {
+        _context.Users.Add(user);
+        _context.SaveChanges();
+    }
+
+    public User GetAccount(string username)
+    {
+        return _context.Users.FirstOrDefault(x => x.Username.Equals(username))
+            ?? throw new KeyNotFoundException("Username belum terdaftar");
+    }
+
+    public Role GetRoleByUsername(int roleID)
+    {
+
+        return _context.Roles.FirstOrDefault(c => c.Id == roleID);
     }
 
 }

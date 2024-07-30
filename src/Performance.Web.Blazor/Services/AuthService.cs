@@ -10,22 +10,25 @@ namespace Performance.Web.Blazor.Services;
 public class AuthService
 {
     private readonly IAuthRepository _accountRepository;
+    private readonly IHttpContextAccessor _httpContextAccessor;
 
-    public AuthService(IAuthRepository accountRepository)
+    public AuthService(IAuthRepository accountRepository, IHttpContextAccessor httpContextAccessor)
     {
         _accountRepository = accountRepository;
+        _httpContextAccessor = httpContextAccessor;
     }
 
-    public void Register(RegisterViewModel registerViewModel)
+    public void Register(RegisterEmployeeViewModel registerViewModel)
     {
 
-        if(registerViewModel.Department  == null)
+        if(registerViewModel == null)
         {
             throw new Exception("Data Tidak ada");
         }
 
         Profile profile = new Profile
         {
+            UserId = registerViewModel.Id,
             Title = registerViewModel.Title,
             FirstName = registerViewModel.Firstname,
             LastName = registerViewModel.Lastname,
@@ -35,41 +38,73 @@ public class AuthService
             Email = registerViewModel.Firstname + "." + registerViewModel.Lastname + "@indocyber.co.id"
         };
 
+        _accountRepository.RegisterProfile(profile);
+
+        User user = new User
+        {
+            Username = registerViewModel.Firstname+"."+registerViewModel.Lastname,
+            Password = BCrypt.Net.BCrypt.HashPassword("Indocyber"),
+            Role = 2,
+            ProfileId = profile.UserId,
+            CreatedAt = DateTime.Now
+        };
+
+        _accountRepository.RegisterUser(user);
+
+    }
+
+    public void RegisterAdm(RegisterViewModel registerViewModel)
+    {
+
+        if (registerViewModel.Department == null)
+        {
+            throw new Exception("Data Tidak ada");
+        }
+
+        Profile profile = new Profile
+        {
+            UserId = registerViewModel.Id,
+            Title = registerViewModel.Title,
+            FirstName = registerViewModel.Firstname,
+            LastName = registerViewModel.Lastname,
+            Nik = registerViewModel.NIK,
+            Department = registerViewModel.Department,
+            Birthdate = registerViewModel.Birthdate,
+            Email = registerViewModel.Firstname + "." + registerViewModel.Lastname + "@indocyber.co.id"
+        };
+
+        _accountRepository.RegisterProfile(profile);
+
         User user = new User
         {
             Username = "Admin",
             Password = BCrypt.Net.BCrypt.HashPassword(registerViewModel.Password),
             Role = 1,
+            ProfileId = profile.UserId,
             CreatedAt = DateTime.Now
         };
 
-        _accountRepository.Register(profile, user);
+        _accountRepository.RegisterUser(user);
 
     }
 
-    public AuthenticationTicket Login(LoginViewModel vm)
+    public async Task Login(LoginViewModel vm)
     {
-        //Console.WriteLine(vm.Username);
-        //var user = _accountRepository.GetAccount(vm.Username);
+        var user = _accountRepository.GetAccount(vm.Username);
 
+        bool isCorrectPassword = BCrypt.Net.BCrypt.Verify(vm.Password, user.Password);
 
-        ////var user = _Context.Accounts.FirstOrDefault(u => u.Username.Equals(vm.Username))
-        ////    ?? throw new KeyNotFoundException("Username salah atau belum terdaftar");
+        if (!isCorrectPassword)
+        {
+            throw new Exception("Username atau Password anda salah");
+        }
 
-        ////memverifikasi apakah password yang diinput(VM) benar dan cocok dengan yang ada di user
-        //bool isCorrectPassword = BCrypt.Net.BCrypt.Verify(vm.Password, user.Password);
+        var userRoles = _accountRepository.GetRoleByUsername((int)user.Role);
 
-        //if (!isCorrectPassword)
-        //{
-        //    throw new PasswordException("Username atau Password anda salah");
-        //}
-
-        //var userRoles = _accountRepository.GetRolesByAccountId(user.Id);
-
-        //if (!VerifyUserRole(user.Roles, vm.Role))
-        //{
-        //    throw new RoleException("Role tidak valid untuk pengguna ini");
-        //}
+        if(userRoles.Name != vm.Role)
+        {
+            throw new Exception("Role tidak valid untuk user ini");
+        }
 
 
         ////principal
@@ -78,15 +113,9 @@ public class AuthService
 
         AuthenticationTicket authenticationTicket = GetAuthenticationTicket(principal);
 
-        return authenticationTicket;
+        await _httpContextAccessor.HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
+
     }
-
-
-    //private bool VerifyUserRole(IEnumerable<Role> userRoles, EnumRoles inputRole)
-    //{
-    //    // Memeriksa apakah inputRole ada dalam koleksi userRoles
-    //    return userRoles.Any(r => r.Role1 == inputRole);
-    //}
 
     public ClaimsPrincipal GetPrincipal(LoginViewModel user)
     {
@@ -115,5 +144,7 @@ public class AuthService
 
         return authenticationTicket;
     }
+
+
 }
 

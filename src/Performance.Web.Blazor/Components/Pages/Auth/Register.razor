@@ -3,20 +3,20 @@
 @inject AuthService authservice
 @inject NavigationManager navigator
 
-<h3>ini register</h3>
 
-<EditForm FormName="reg" OnValidSubmit="@HandleRegister" Model="@viewModel">
+<h3>Register</h3>
+
+<EditForm Model="@viewModel" FormName="reg" OnValidSubmit="HandleRegister">
     <DataAnnotationsValidator />
     <ValidationSummary />
-    @* <AntiforgeryToken/> *@
 
     <div class="text_field mb-2">
         <label for="Title">Title</label>
-        <InputSelect id="Title" class="form-control" @bind-Value="@viewModel.Title">
+        <InputSelect id="Title" class="form-control" @bind-Value="viewModel.Title">
             <option value="">Title</option>
             @foreach (var title in Titles)
             {
-                <option value="@title.Value">@title.Text</option>
+                <option value="@title">@title</option>
             }
         </InputSelect>
     </div>
@@ -24,35 +24,35 @@
         <div class="col-md-6">
             <div class="text_field mb-2">
                 <label for="Firstname">Firstname</label>
-                <InputText id="Firstname" class="form-control" @bind-Value="@viewModel.Firstname" />
+                <InputText id="Firstname" class="form-control" @bind-Value="viewModel.Firstname" />
             </div>
         </div>
         <div class="col-md-6">
             <div class="text_field mb-2">
                 <label for="Lastname">Lastname</label>
-                <InputText id="Lastname" class="form-control" @bind-Value="@viewModel.Lastname" />
+                <InputText id="Lastname" class="form-control" @bind-Value="viewModel.Lastname" />
             </div>
         </div>
     </div>
     <div class="text_field mb-2">
         <label for="NIK">NIK</label>
-        <InputText id="NIK" class="form-control" @bind-Value="@viewModel.NIK" />
+        <InputText id="NIK" class="form-control" @bind-Value="viewModel.NIK" />
     </div>
     <div class="text_field mb-2">
         <label for="Department">Department</label>
-        <InputText id="Department" class="form-control" @bind-Value="@viewModel.Department" />
+        <InputText id="Department" class="form-control" @bind-Value="viewModel.Department" />
     </div>
     <div class="text_field mb-2">
         <label for="Birthdate">Birthdate</label>
-        <InputDate id="Birthdate" class="form-control" @bind-Value="@viewModel.Birthdate" />
+        <InputDate id="Birthdate" class="form-control" @bind-Value="viewModel.Birthdate" />
     </div>
     <div class="text_field mb-2">
         <label for="Password">Password</label>
-        <InputText id="Password" type="password" class="form-control" @bind-Value="@viewModel.Password" />
+        <InputText id="Password" type="password" class="form-control" @bind-Value="viewModel.Password" />
     </div>
     <div class="text_field mb-2">
         <label for="RetypePassword">Retype Password</label>
-        <InputText id="RetypePassword" type="password" class="form-control" @bind-Value="@viewModel.RetypePassword" />
+        <InputText id="RetypePassword" type="password" class="form-control" @bind-Value="viewModel.RetypePassword" />
     </div>
 
     <button type="submit" class="btn btn-primary mb-1">Register</button>
@@ -63,28 +63,28 @@
 </EditForm>
 
 @code {
-    private RegisterViewModel viewModel = new RegisterViewModel();
 
-    private List<SelectListItem> Titles = new List<SelectListItem>
+    [SupplyParameterFromForm(FormName = "reg")]
+    public RegisterViewModel viewModel { get; set; } = new();
+
+    private List<string> Titles = new List<string>
     {
-        new SelectListItem { Text = "Mr. ", Value = "Mr. " },
-        new SelectListItem { Text = "Ms. ", Value = "Ms. " }
+        "Mr. ",
+        "Ms. "
     };
 
     private void HandleRegister()
     {
-        Console.WriteLine($"Title: {viewModel.Title}");
-        Console.WriteLine($"Firstname: {viewModel.Firstname}");
-        Console.WriteLine($"Lastname: {viewModel.Lastname}");
-        Console.WriteLine($"NIK: {viewModel.NIK}");
-        Console.WriteLine($"Department: {viewModel.Department}");
-        Console.WriteLine($"Birthdate: {viewModel.Birthdate}");
-        Console.WriteLine($"Password: {viewModel.Password}");
-        Console.WriteLine($"RetypePassword: {viewModel.RetypePassword}");
+        try
+        {
 
-        authservice.Register(viewModel);
-        navigator.NavigateTo("/");
-
-
+            authservice.RegisterAdm(viewModel);
+            navigator.NavigateTo("/login");
+        } 
+        catch (Exception e)
+        {
+            Console.WriteLine("Error :"+ e.Message);
+        }
     }
+
 }

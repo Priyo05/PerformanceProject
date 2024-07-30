@@ -9,13 +9,17 @@ public partial class Additionalindicator
 
     public int? UserId { get; set; }
 
+    public int? AnuallycompetencesId { get; set; }
+
     public DateTime? CreatedAt { get; set; }
 
     public int? IndikatorTotalValue { get; set; }
 
     public int? Period { get; set; }
 
-    public virtual ICollection<Anuallycompetence> Anuallycompetences { get; set; } = new List<Anuallycompetence>();
+    public virtual Anuallycompetence? Anuallycompetences { get; set; }
 
     public virtual ICollection<Indicator> Indicators { get; set; } = new List<Indicator>();
+
+    public virtual Profile? User { get; set; }
 }

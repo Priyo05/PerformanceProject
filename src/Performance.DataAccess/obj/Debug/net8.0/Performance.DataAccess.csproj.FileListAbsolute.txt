@@ -12,3 +12,4 @@ C:\Users\1913\Desktop\PerformanceProject\src\Performance.DataAccess\obj\Debug\ne
 C:\Users\1913\Desktop\PerformanceProject\src\Performance.DataAccess\obj\Debug\net8.0\Performance.DataAccess.pdb
 C:\Users\1913\Desktop\PerformanceProject\src\Performance.DataAccess\obj\Debug\net8.0\Performance.DataAccess.genruntimeconfig.cache
 C:\Users\1913\Desktop\PerformanceProject\src\Performance.DataAccess\obj\Debug\net8.0\ref\Performance.DataAccess.dll
+C:\Users\1913\Desktop\PerformanceProject\src\Performance.DataAccess\obj\Debug\net8.0\Performance.DataAccess.sourcelink.json

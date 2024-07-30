@@ -7,6 +7,8 @@ public partial class Workmainindicator
 {
     public int Id { get; set; }
 
+    public int? UserId { get; set; }
+
     public int? AnuallycompetencesId { get; set; }
 
     public string? StrategicObjective { get; set; }
@@ -26,8 +28,6 @@ public partial class Workmainindicator
     public int? TingkatUnjukKerja { get; set; }
 
     public int? NilaiUnjukKerja { get; set; }
-
-    public int? UserId { get; set; }
 
     public int? Period { get; set; }
 

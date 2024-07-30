@@ -9,13 +9,17 @@ public partial class Responsibilityareaindicator
 
     public int? UserId { get; set; }
 
+    public int? AnuallycompetencesId { get; set; }
+
     public DateTime? CreatedAt { get; set; }
 
     public int? NilaiUntukKerjaTotal { get; set; }
 
     public int? Period { get; set; }
 
-    public virtual ICollection<Anuallycompetence> Anuallycompetences { get; set; } = new List<Anuallycompetence>();
+    public virtual Anuallycompetence? Anuallycompetences { get; set; }
 
     public virtual ICollection<Aspek> Aspeks { get; set; } = new List<Aspek>();
+
+    public virtual Profile? User { get; set; }
 }

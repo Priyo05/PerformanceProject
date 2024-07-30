@@ -7,6 +7,10 @@ public partial class Basiccompetence
 {
     public int Id { get; set; }
 
+    public int? UserId { get; set; }
+
+    public int? AnuallycompetencesId { get; set; }
+
     public string? CustomerFocus { get; set; }
 
     public string? Integrity { get; set; }
@@ -17,13 +21,13 @@ public partial class Basiccompetence
 
     public string? WorkExcellent { get; set; }
 
-    public int? UserId { get; set; }
-
     public DateTime? CreatedAt { get; set; }
 
     public int? TotalValue { get; set; }
 
     public int? Period { get; set; }
 
-    public virtual ICollection<Anuallycompetence> Anuallycompetences { get; set; } = new List<Anuallycompetence>();
+    public virtual Anuallycompetence? Anuallycompetences { get; set; }
+
+    public virtual Profile? User { get; set; }
 }
