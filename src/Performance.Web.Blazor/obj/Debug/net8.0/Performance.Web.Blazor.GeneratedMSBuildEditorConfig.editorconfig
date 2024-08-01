@@ -54,12 +54,20 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xIb21lXEhvbWUucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/1913/Desktop/PerformanceProject/src/Performance.Web.Blazor/Components/Pages/Weather.razor]
-build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xXZWF0aGVyLnJhem9y
+[C:/Users/1913/Desktop/PerformanceProject/src/Performance.Web.Blazor/Components/Pages/Penilaian/EditMainIndicator.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xQZW5pbGFpYW5cRWRpdE1haW5JbmRpY2F0b3IucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/1913/Desktop/PerformanceProject/src/Performance.Web.Blazor/Components/Penilaian/IndikatorUtamaKerja.razor]
-build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQZW5pbGFpYW5cSW5kaWthdG9yVXRhbWFLZXJqYS5yYXpvcg==
+[C:/Users/1913/Desktop/PerformanceProject/src/Performance.Web.Blazor/Components/Pages/Penilaian/IndikatorUtamaKerja.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xQZW5pbGFpYW5cSW5kaWthdG9yVXRhbWFLZXJqYS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/1913/Desktop/PerformanceProject/src/Performance.Web.Blazor/Components/Pages/Penilaian/MainIndicatorTable.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xQZW5pbGFpYW5cTWFpbkluZGljYXRvclRhYmxlLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/1913/Desktop/PerformanceProject/src/Performance.Web.Blazor/Components/Pages/Weather.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xXZWF0aGVyLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/1913/Desktop/PerformanceProject/src/Performance.Web.Blazor/Components/Routes.razor]
