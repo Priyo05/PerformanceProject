@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\buildMultiTargeting\Performance.Web.WebBlazor.props" />
+</Project>

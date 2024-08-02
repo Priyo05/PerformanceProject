@@ -1,0 +1,69 @@
+﻿@page "/login"
+@layout Components.Layout.LoginLayout
+@inject HttpClient httpClient
+@inject NavigationManager navigator
+
+<h3>Silakan Login</h3>
+
+<EditForm Model="loginViewModel" FormName="Log" OnValidSubmit="HandleLogin">
+    <div class="text_field mb-4">
+        <label for="username">Username</label>
+        <InputText id="username" class="form-control" @bind-Value="loginViewModel.Username" />
+        <ValidationMessage For="() => loginViewModel.Username" />
+    </div>
+    <div class="text_field mb-4">
+        <label for="password">Password</label>
+        <InputText id="password" type="password" class="form-control" @bind-Value="loginViewModel.Password" />
+        <ValidationMessage For="() => loginViewModel.Password" />
+    </div>
+    <div class="text_field mb-4">
+        <label for="role">Role</label>
+        <InputSelect class="form-control" @bind-Value="loginViewModel.Role">
+            <option value="">Select Role</option>
+            @foreach (var role in roles)
+            {
+                <option value="@role.Value">@role.Text</option>
+            }
+        </InputSelect>
+        <ValidationMessage For="() => loginViewModel.Role" />
+    </div>
+    <div class="text-center mb-3">
+        <span class="text-danger">@errorMessage</span>
+    </div>
+    <input type="submit" value="Login" class="btn btn-primary mb-4" />
+
+    <DataAnnotationsValidator />
+    @*
+    <NavLink class="nav-link" href="/register">
+    <span>Don't have an account? Register here</span>
+    </NavLink> *@
+</EditForm>
+
+@code {
+    [SupplyParameterFromForm(FormName = "Log")]
+    public LoginViewModel loginViewModel { get; set; } = new();
+
+    private string? errorMessage { get; set; }
+
+    private List<SelectListItem> roles = new List<SelectListItem>
+    {
+        new SelectListItem { Text = "Admin", Value = "Admin" },
+        new SelectListItem { Text = "Employee", Value = "Employee" }
+    };
+
+    private async Task HandleLogin()
+    {
+
+        var response = await httpClient.PostAsJsonAsync("https://localhost:7058/api/Auth/Login", loginViewModel);
+        if (response.IsSuccessStatusCode)
+        {
+            navigator.NavigateTo("/");
+        }
+        else
+        {
+            var errorContent = await response.Content.ReadAsStringAsync();
+            errorMessage = errorContent;
+        }
+
+    }
+}
