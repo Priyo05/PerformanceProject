@@ -70,4 +70,18 @@ input[type="submit"]{
         margin-top: 20px;
     }
 
+    .performance-table td,
+    .performance-table th {
+        padding: 8px;
+    }
+
+    .performance-table tbody td:nth-child(1) {
+        text-align: center;
+    }
+
+    .performance-table tbody td:nth-child(2),
+    .performance-table tbody td:nth-child(3) {
+        text-align: left;
+    }
+
 

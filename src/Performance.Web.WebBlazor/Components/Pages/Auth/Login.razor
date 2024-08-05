@@ -1,7 +1,10 @@
 ﻿@page "/login"
-@layout Components.Layout.LoginLayout
+@layout LoginLayout
 @inject HttpClient httpClient
 @inject NavigationManager navigator
+@inject ILocalStorageService localStorage
+
+@rendermode @(new InteractiveServerRenderMode(prerender: false))
 
 <h3>Silakan Login</h3>
 
@@ -33,14 +36,10 @@
     <input type="submit" value="Login" class="btn btn-primary mb-4" />
 
     <DataAnnotationsValidator />
-    @*
-    <NavLink class="nav-link" href="/register">
-    <span>Don't have an account? Register here</span>
-    </NavLink> *@
 </EditForm>
 
 @code {
-    [SupplyParameterFromForm(FormName = "Log")]
+    [SupplyParameterFromForm]
     public LoginViewModel loginViewModel { get; set; } = new();
 
     private string? errorMessage { get; set; }
@@ -51,19 +50,48 @@
         new SelectListItem { Text = "Employee", Value = "Employee" }
     };
 
+    private string? tokenToSave { get; set; } = null;
+    private bool loginSucceeded;
+
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (loginSucceeded)
+        {
+            if (tokenToSave != null)
+            {
+                await localStorage.SetItemAsync("AuthToken", tokenToSave);
+
+                await Task.Delay(500); 
+                navigator.NavigateTo("/");
+            }
+        }
+    }
+
     private async Task HandleLogin()
     {
-
-        var response = await httpClient.PostAsJsonAsync("https://localhost:7058/api/Auth/Login", loginViewModel);
-        if (response.IsSuccessStatusCode)
+        try
         {
-            navigator.NavigateTo("/");
-        }
-        else
-        {
-            var errorContent = await response.Content.ReadAsStringAsync();
-            errorMessage = errorContent;
-        }
+            var response = await httpClient.PostAsJsonAsync("https://localhost:7058/api/Auth/Login", loginViewModel);
 
+            if (response.IsSuccessStatusCode)
+            {
+                var tokenResponse = await response.Content.ReadFromJsonAsync<TokenRespondDto>();
+                tokenToSave = tokenResponse.Token;
+                loginSucceeded = true;
+
+                await InvokeAsync(StateHasChanged);
+            }
+            else
+            {
+                errorMessage = await response.Content.ReadAsStringAsync();
+            }
+        }
+        catch (Exception ex)
+        {
+            errorMessage = ex.Message;
+        }
     }
+
+
 }

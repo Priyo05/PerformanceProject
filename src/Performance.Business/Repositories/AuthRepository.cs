@@ -17,17 +17,17 @@ public class AuthRepository : IAuthRepository
         _context = context;
     }
 
-    public void RegisterProfile(Profile profile)
-    {
-        _context.Profiles.Add(profile);
-        _context.SaveChanges();
-    }
+    //public void RegisterProfile(Profile profile)
+    //{
+    //    _context.Profiles.Add(profile);
+    //    _context.SaveChanges();
+    //}
 
-    public void RegisterUser(User user)
-    {
-        _context.Users.Add(user);
-        _context.SaveChanges();
-    }
+    //public void RegisterUser(User user)
+    //{
+    //    _context.Users.Add(user);
+    //    _context.SaveChanges();
+    //}
 
     public User GetAccount(string username)
     {

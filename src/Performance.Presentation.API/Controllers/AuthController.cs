@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Performance.Presentation.API.ViewModels.Auth;
 using System.Security.Cryptography;
 
 namespace Performance.Presentation.API.Controllers;
@@ -28,21 +29,21 @@ public class AuthController : ControllerBase
         }
     }
 
-    [HttpPost("Register")]
-    public IActionResult Register(RegisterEmployeeViewModel registerViewModel) 
-    {
-        try
-        {
-            _authService.Register(registerViewModel);
+    //[HttpPost("Register")]
+    //public IActionResult Register(RegisterEmployeeViewModel registerViewModel) 
+    //{
+    //    try
+    //    {
+    //        _authService.Register(registerViewModel);
 
-            return Ok("Register Success");
-        }
-        catch (Exception ex)
-        {
-            return BadRequest(ex.Message);
-        }
+    //        return Ok("Register Success");
+    //    }
+    //    catch (Exception ex)
+    //    {
+    //        return BadRequest(ex.Message);
+    //    }
 
-    }
+    //}
 
 
 

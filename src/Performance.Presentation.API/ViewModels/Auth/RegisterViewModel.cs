@@ -1,7 +1,8 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Components;
+using System.ComponentModel.DataAnnotations;
 
-namespace Performance.Presentation.API;
-public class RegisterEmployeeViewModel
+namespace Performance.Presentation.API.ViewModels.Auth;
+public class RegisterViewModel
 {
     public int Id { get; set; }
     [Required(ErrorMessage = "Firstname is required")]
@@ -22,5 +23,12 @@ public class RegisterEmployeeViewModel
 
     [Required(ErrorMessage = "Birthdate is required")]
     public DateTime Birthdate { get; set; }
+
+    [Required(ErrorMessage = "Password is required")]
+    public string Password { get; set; }
+
+    [Compare("Password", ErrorMessage = "Password not match")]
+    [Required(ErrorMessage = "RetypePassword is required")]
+    public string RetypePassword { get; set; }
 }
 

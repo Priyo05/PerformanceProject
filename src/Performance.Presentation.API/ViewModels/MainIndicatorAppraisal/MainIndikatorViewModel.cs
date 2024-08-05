@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Performance.Presentation.API;
+namespace Performance.Presentation.API.ViewModels.MainIndicatorAppraisal;
 public class MainIndikatorViewModel
 {
     public int Id { get; set; }

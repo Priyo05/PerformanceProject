@@ -1,9 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Performance.Web.WebBlazor.ViewModels;
+namespace Performance.Presentation.API.ViewModels.Auth;
 public class LoginViewModel
 {
-    [Required(ErrorMessage ="Username is Required")]
+    [Required(ErrorMessage = "Username is Required")]
     public string Username { get; set; }
     [Required(ErrorMessage = "Password is Required")]
     public string Password { get; set; }

@@ -11,7 +11,7 @@
         Add Employee
     </div>
 
-    <EditForm class="p-3" Model="@viewModel" FormName="regemp" OnValidSubmit="HandleRegister">
+    <EditForm class="p-3" Model="@viewModel" FormName="regemp" OnValidSubmit="HandleRegisterEmp">
 
 
         <div class="text_field mb-2 w-50">
@@ -52,7 +52,7 @@
         </div>
 
         <div class="text-center mb-3">
-            <span class="text-danger">@errorMessage</span>
+            <span class="text-danger">@ErrorMessage</span>
         </div>
 
         <button type="submit" class="btn btn-primary mb-1">Add Employee</button>
@@ -67,9 +67,9 @@
 @code {
 
     [SupplyParameterFromForm(FormName = "regemp")]
-    public RegisterEmployeeViewModel viewModel { get; set; } = new();
+    public InsertEmployeeViewModel viewModel { get; set; } = new();
 
-    private string? errorMessage { get; set; }
+    private string? ErrorMessage { get; set; }
 
     private List<string> Titles = new List<string>
     {
@@ -77,19 +77,19 @@
         "Ms. "
     };
 
-    private async Task HandleRegister()
+    private async Task HandleRegisterEmp()
     {
-        try
-        {
 
-            await httpClient.PostAsJsonAsync("https://localhost:7058/api/Auth/Register", viewModel);
+        var response = await httpClient.PostAsJsonAsync("https://localhost:7058/api/Employee/AddEmployee", viewModel);
+        if (response.IsSuccessStatusCode)
+        {
             navigator.NavigateTo("/employees");
-
         }
-        catch (Exception e)
+        else
         {
-            errorMessage = e.Message;
+            ErrorMessage = await response.Content.ReadAsStringAsync();
         }
+
     }
 
 }

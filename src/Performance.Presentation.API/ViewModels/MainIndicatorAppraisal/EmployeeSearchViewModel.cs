@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Performance.Presentation.API;
+namespace Performance.Presentation.API.ViewModels.MainIndicatorAppraisal;
 public class EmployeeSearchViewModel
 {
     [Required(ErrorMessage = "Name is required")]
@@ -9,8 +9,8 @@ public class EmployeeSearchViewModel
     public string NIK { get; set; }
     [Required(ErrorMessage = "Department is required")]
     public string Department { get; set; }
-    [Required(ErrorMessage ="Periode is required")]
-    public int Periode {  get; set; }
-    
+    [Required(ErrorMessage = "Periode is required")]
+    public int Periode { get; set; }
+
 }
 

@@ -1,10 +1,10 @@
 ﻿using Performance.Business.Interfaces;
 using Performance.DataAccess.Models;
 using System.Security.Claims;
-using Performance.Presentation.API.ViewModels;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
+using Performance.Presentation.API.ViewModels.Auth;
 
 namespace Performance.Presentation.API;
 public class AuthService
@@ -18,69 +18,69 @@ public class AuthService
         _configuration = configuration;
     }
 
-    public void Register(RegisterEmployeeViewModel registerViewModel)
-    {
+    //public void Register(RegisterEmployeeViewModel registerViewModel)
+    //{
 
-        Profile profile = new Profile
-        {
-            Title = registerViewModel.Title,
-            FirstName = registerViewModel.Firstname,
-            LastName = registerViewModel.Lastname,
-            Nik = registerViewModel.NIK,
-            Department = registerViewModel.Department,
-            Birthdate = registerViewModel.Birthdate,
-            Email = registerViewModel.Firstname + "." + registerViewModel.Lastname + "@indocyber.co.id"
-        };
+    //    Profile profile = new Profile
+    //    {
+    //        Title = registerViewModel.Title,
+    //        FirstName = registerViewModel.Firstname,
+    //        LastName = registerViewModel.Lastname,
+    //        Nik = registerViewModel.NIK,
+    //        Department = registerViewModel.Department,
+    //        Birthdate = registerViewModel.Birthdate,
+    //        Email = registerViewModel.Firstname + "." + registerViewModel.Lastname + "@indocyber.co.id"
+    //    };
 
-        _accountRepository.RegisterProfile(profile);
+    //    _accountRepository.RegisterProfile(profile);
 
-        User user = new User
-        {
-            Username = registerViewModel.Firstname+"."+registerViewModel.Lastname,
-            Password = BCrypt.Net.BCrypt.HashPassword("Indocyber"),
-            Role = 2,
-            ProfileId = profile.UserId,
-            CreatedAt = DateTime.Now
-        };
+    //    User user = new User
+    //    {
+    //        Username = registerViewModel.Firstname+"."+registerViewModel.Lastname,
+    //        Password = BCrypt.Net.BCrypt.HashPassword("Indocyber"),
+    //        Role = 2,
+    //        ProfileId = profile.UserId,
+    //        CreatedAt = DateTime.Now
+    //    };
 
-        _accountRepository.RegisterUser(user);
+    //    _accountRepository.RegisterUser(user);
 
-    }
+    //}
 
-    public void RegisterAdm(RegisterViewModel registerViewModel)
-    {
+    //public void RegisterAdm(RegisterViewModel registerViewModel)
+    //{
 
-        if (registerViewModel.Department == null)
-        {
-            throw new Exception("Data Tidak ada");
-        }
+    //    if (registerViewModel.Department == null)
+    //    {
+    //        throw new Exception("Data Tidak ada");
+    //    }
 
-        Profile profile = new Profile
-        {
-            UserId = registerViewModel.Id,
-            Title = registerViewModel.Title,
-            FirstName = registerViewModel.Firstname,
-            LastName = registerViewModel.Lastname,
-            Nik = registerViewModel.NIK,
-            Department = registerViewModel.Department,
-            Birthdate = registerViewModel.Birthdate,
-            Email = registerViewModel.Firstname + "." + registerViewModel.Lastname + "@indocyber.co.id"
-        };
+    //    Profile profile = new Profile
+    //    {
+    //        UserId = registerViewModel.Id,
+    //        Title = registerViewModel.Title,
+    //        FirstName = registerViewModel.Firstname,
+    //        LastName = registerViewModel.Lastname,
+    //        Nik = registerViewModel.NIK,
+    //        Department = registerViewModel.Department,
+    //        Birthdate = registerViewModel.Birthdate,
+    //        Email = registerViewModel.Firstname + "." + registerViewModel.Lastname + "@indocyber.co.id"
+    //    };
 
-        _accountRepository.RegisterProfile(profile);
+    //    _accountRepository.RegisterProfile(profile);
 
-        User user = new User
-        {
-            Username = "Admin",
-            Password = BCrypt.Net.BCrypt.HashPassword(registerViewModel.Password),
-            Role = 1,
-            ProfileId = profile.UserId,
-            CreatedAt = DateTime.Now
-        };
+    //    User user = new User
+    //    {
+    //        Username = "Admin",
+    //        Password = BCrypt.Net.BCrypt.HashPassword(registerViewModel.Password),
+    //        Role = 1,
+    //        ProfileId = profile.UserId,
+    //        CreatedAt = DateTime.Now
+    //    };
 
-        _accountRepository.RegisterUser(user);
+    //    _accountRepository.RegisterUser(user);
 
-    }
+    //}
 
     public TokenRespondDto Login(LoginViewModel vm)
     {

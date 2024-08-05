@@ -12,4 +12,8 @@
     <ProjectReference Include="..\Performance.Presentation.API\Performance.Presentation.API.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Blazored.LocalStorage" Version="4.5.0" />
+  </ItemGroup>
+
 </Project>

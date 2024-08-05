@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
 using System.ComponentModel.DataAnnotations;
 
-namespace Performance.Web.WebBlazor.ViewModels;
+namespace Performance.Web.WebBlazor.ViewModels.Auth;
 public class RegisterViewModel
 {
     public int Id { get; set; }

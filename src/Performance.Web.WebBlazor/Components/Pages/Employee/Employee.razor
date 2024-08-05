@@ -1,7 +1,114 @@
 ﻿@page "/employees"
+@layout Components.Layout.MainLayout
+@* @inject AuthService authservice *@
+@inject NavigationManager navigator
+@inject HttpClient httpClient
+@rendermode InteractiveServer
 
-<h3>Employee</h3>
+
+<div class="card mt-3">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <h3>Employees</h3>
+        <div class="input-group w-50">
+            <input @bind="Search" @bind:event="oninput" class="form-control" type="text" placeholder="Search employee..." />
+            <button class="btn btn-outline-secondary" @onclick="SearchEmployee">Search</button>
+        </div>
+    </div>
+
+    <div class="card-body">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>No.</th>
+                    <th>Fullname</th>
+                    <th>Department</th>
+                    <th>NIK</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (EmployeeViewModel.Count > 0)
+                {
+                    @for (int i = 0; i < EmployeeViewModel.Count; i++)
+                    {
+                        var row = EmployeeViewModel[i];
+                        <tr>
+                            <td>@(i + 1)</td>
+                            <td>@row.Fullname</td>
+                            <td>@row.Department</td>
+                            <td>@row.Nik</td>
+                            <td>
+                                <a href="@($"/editmain/{row.EmployeeId}")" class="btn btn-primary">
+                                    Edit
+                                </a>
+                                <button class="btn btn-danger" @onclick="() => Delete(row.EmployeeId)">Delete</button>
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="5" class="text-center">No data available</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
 
 @code {
+    public List<EmployeeViewModel> EmployeeViewModel { get; set; } = new();
+    public string? Search { get; set; }
+    private int pageNumber { get; set; } = 1;
+    private string? ErrorMessage { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadData();
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        await LoadData();
+    }
+
+    private async Task LoadData()
+    {
+        try
+        {
+            var url = $"https://localhost:7058/api/Employee?search={Search}";
+            var response = await httpClient.GetAsync(url);
+
+            if (response.IsSuccessStatusCode)
+            {
+                var result = await response.Content.ReadFromJsonAsync<EmployeeResponse>(new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+
+                if (result != null)
+                {
+                    EmployeeViewModel = result.Employees;
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            ErrorMessage = ex.Message;
+        }
+    }
+
+    private async Task SearchEmployee()
+    {
+        pageNumber = 1;
+        Console.WriteLine("TEST MASUK GK");
+        await LoadData();
+    }
+
+
+    private void Delete(int id)
+    {
+        
+    }
+
+
 
 }

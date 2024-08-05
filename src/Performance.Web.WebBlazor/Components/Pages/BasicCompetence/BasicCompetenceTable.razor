@@ -1,0 +1,283 @@
+﻿@inject HttpClient httpClient
+@rendermode InteractiveServer
+
+<div class="card mt-3">
+
+    <div class="card-header">
+        B. Kompetensi Dasar
+    </div>
+
+    <table class="performance-table table">
+        <thead>
+            <tr>
+                <th>No.</th>
+                <th>Kompetensi</th>
+                <th>Perilaku</th>
+                <th>Kurang</th>
+                <th>Cukup</th>
+                <th>Baik</th>
+                <th>Keterangan</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>
+                    CUSTOMER FOCUS
+                </td>
+                <td>
+                    Menjaga Kejelasan Komunikasi dengan Konsumen
+                    Menjalin komunikasi dua arah dengan konsumen
+                    mengenai harapan dan kepentingan bersama, memonitor
+                    tingkat kepuasan konsumen dan memberikan informasi-informasi yang berguna bagi konsumen.
+                </td>
+                <td>
+                    <input type="radio" name="customerfocus" value="Kurang" @onchange="(args => HandleRadioChange(CustomerFocus,args))" checked="@(basicCompetence.CustomerFocus == "Kurang")" />
+                </td>
+                <td>
+                    <input type="radio" name="customerfocus" value="Cukup" @onchange="(args => HandleRadioChange(CustomerFocus,args))" checked="@(basicCompetence.CustomerFocus == "Cukup")" />
+                </td>
+                <td>
+                    <input type="radio" name="customerfocus" value="Baik" @onchange="(args => HandleRadioChange(CustomerFocus,args))" checked="@(basicCompetence.CustomerFocus == "Baik")" />
+                </td>
+                <td>
+                    @CustomerFocusExplanation
+                </td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>
+                    INTEGRITAS
+                </td>
+                <td>
+                    Berorientasi pada Kebenaran
+                    Menyampaikan masalah dan fakta walaupun dapat memberikan
+                    dampak negatif kepada pihak lain, termasuk didalamnya berani
+                    untuk menyampaikan pendapat, masukan, keluhan ataupun kritik
+                    membangun kepada rekan kerja, atasan ataupun perusahaan baik
+                    secara pribadi maupun dalam forum umum. Memberikan teguran,
+                    masukan atau saran kepada rekan kerja maupun atasan.
+                </td>
+                <td>
+                    <input type="radio" name="integritas" value="Kurang" @onchange="(args => HandleRadioChange(Integrity,args))" checked="@(basicCompetence.Integrity == "Kurang")" />
+                </td>
+                <td>
+                    <input type="radio" name="integritas" value="Cukup" @onchange="(args => HandleRadioChange(Integrity,args))" checked="@(basicCompetence.Integrity == "Cukup")" />
+                </td>
+                <td>
+                    <input type="radio" name="integritas" value="Baik" @onchange="(args => HandleRadioChange(Integrity,args))" checked="@(basicCompetence.Integrity == "Baik")" />
+                </td>
+                <td>
+                    @IntegrityExplanation
+                </td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>
+                    KERJASAMA TIM
+                </td>
+                <td>
+                    Menjalin Koordinasi
+                    Menjalin koordinasi dengan anggota tim maupun dengan unit bagian
+                    lain untuk mendukung kelancaran pekerjaan,  berkomunikasi dengan
+                    rekan kerja baik internal unit maupun antar unit untuk membahas
+                    dan menyelesaikan permasalahan dengan cara yang terbaik.
+                </td>
+                <td>
+                    <input type="radio" name="kerjasamatim" value="Kurang" @onchange="(args => HandleRadioChange(Teamwork,args))" checked="@(basicCompetence.Teamwork == "Kurang")" />
+                </td>
+                <td>
+                    <input type="radio" name="kerjasamatim" value="Cukup" @onchange="(args => HandleRadioChange(Teamwork,args))" checked="@(basicCompetence.Teamwork == "Cukup")" />
+                </td>
+                <td>
+                    <input type="radio" name="kerjasamatim" value="Baik" @onchange="(args => HandleRadioChange(Teamwork,args))" checked="@(basicCompetence.Teamwork == "Baik")" />
+                </td>
+                <td>
+                    @TeamworkExplanation
+                </td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td>
+                    CONTINOUS IMPROVEMENT
+                </td>
+                <td>
+                    Mengenali Peluang Perbaikan
+                    Mampu mendefinisikan area-area perbaikan dalam lingkup proses
+                    kerja yang menjadi tugas dan tanggung jawabnya, dan secara
+                    proaktif berusaha untuk mencari tahu solusi yang dapat di
+                    terapkan disertai dengan tindakan menyampaikan ide dan
+                    solusi kepada rekan kerja dan atasan untuk mendapatkan dukungan.
+                </td>
+                <td>
+                    <input type="radio" name="improve" value="Kurang" @onchange="(args => HandleRadioChange(Improvement,args))" checked="@(basicCompetence.Improvment == "Kurang")" />
+                </td>
+                <td>
+                    <input type="radio" name="improve" value="Cukup" @onchange="(args => HandleRadioChange(Improvement,args))" checked="@(basicCompetence.Improvment == "Cukup")" />
+                </td>
+                <td>
+                    <input type="radio" name="improve" value="Baik" @onchange="(args => HandleRadioChange(Improvement,args))" checked="@(basicCompetence.Improvment == "Baik")" />
+                </td>
+                <td>
+                    @ImprovmentExplanation
+                </td>
+            </tr>
+            <tr>
+                <td>5</td>
+                <td>
+                    WORK EXCELLENCE
+                </td>
+                <td>
+                    Menetapkan Standar Pribadi yang Hendak Dicapai
+                    Bekerja dengan menetapkan standar pribadi untuk melampaui
+                    sasaran/ target kerja yang ditetapkan dan bertanggung jawab
+                    terhadap hasil kerja yang dicapai, mengedepankan peningkatan
+                    efisiensi dan efektifitas kerja seperti mengerjakan lebih cepat,
+                    menurunkan tingkat kesalahan (error margin).
+                </td>
+                <td>
+                    <input type="radio" name="workxecellent" value="Kurang" @onchange="(args => HandleRadioChange(WorkExcellent,args))" checked="@(basicCompetence.WorkExcellent == "Kurang")" />
+                </td>
+                <td>
+                    <input type="radio" name="workxecellent" value="Cukup" @onchange="(args => HandleRadioChange(WorkExcellent,args))" checked="@(basicCompetence.WorkExcellent == "Cukup")" />
+                </td>
+                <td>
+                    <input type="radio" name="workxecellent" value="Baik" @onchange="(args => HandleRadioChange(WorkExcellent,args))" checked="@(basicCompetence.WorkExcellent == "Baik")" />
+                </td>
+                <td>
+                    @WorkExcellentExplanation
+                </td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="6">Nilai (B)</td>
+                <td>@basicCompetence.TotalValue</td>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+
+<button class="btn btn-primary mt-1" @onclick="() => Save()" >Save</button>
+
+
+
+@code {
+    [Parameter]
+    public int userid { get; set; }
+    [Parameter]
+    public int periode { get; set; }
+    private string? errorMessage { get; set; }
+    private string CustomerFocus = "CustomerFocus";
+    private string Integrity = "Integrity";
+    private string Teamwork = "Teamwork";
+    private string Improvement = "Improvement";
+    private string WorkExcellent = "WorkExcellent";
+    private string? CustomerFocusExplanation { get; set; }
+    private string? IntegrityExplanation { get; set; }
+    private string? TeamworkExplanation { get; set; }
+    private string? ImprovmentExplanation { get; set; }
+    private string? WorkExcellentExplanation { get; set; }
+
+    private BasicCompetenceViewModel basicCompetence { get; set; } = new();
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadData();
+        CustomerFocusExplanation = Getexplan(basicCompetence.CustomerFocus);
+        IntegrityExplanation = Getexplan(basicCompetence.Integrity);
+        TeamworkExplanation = Getexplan(basicCompetence.Teamwork);
+        ImprovmentExplanation = Getexplan(basicCompetence.Improvment);
+        WorkExcellentExplanation = Getexplan(basicCompetence.WorkExcellent);
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        await LoadData();
+        CustomerFocusExplanation = Getexplan(basicCompetence.CustomerFocus);
+        IntegrityExplanation = Getexplan(basicCompetence.Integrity);
+        TeamworkExplanation = Getexplan(basicCompetence.Teamwork);
+        ImprovmentExplanation = Getexplan(basicCompetence.Improvment);
+        WorkExcellentExplanation = Getexplan(basicCompetence.WorkExcellent);
+    }
+
+    private async Task LoadData()
+    {
+        try
+        {
+            var url = $"https://localhost:7058/GetBasicCompetenceUser?userid={userid}&periode={periode}";
+            var response = await httpClient.GetAsync(url);
+
+            if (response.IsSuccessStatusCode)
+            {
+                basicCompetence = await response.Content.ReadFromJsonAsync<BasicCompetenceViewModel>(new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+            }
+            else
+            {
+                errorMessage = await response.Content.ReadAsStringAsync();
+            }
+        }
+        catch (Exception ex)
+        {
+            errorMessage = ex.Message;
+        }
+    }
+
+    private void HandleRadioChange(string competency, ChangeEventArgs e)
+    {
+        var value = e.Value.ToString();
+
+        switch (competency)
+        {
+            case "CustomerFocus":
+                basicCompetence.CustomerFocus = value;
+                CustomerFocusExplanation = Getexplan(value);
+                break;
+            case "Integrity":
+                basicCompetence.Integrity = value;
+                IntegrityExplanation = Getexplan(value);
+                break;
+            case "Teamwork":
+                basicCompetence.Teamwork = value;
+                TeamworkExplanation = Getexplan(value);
+                break;
+            case "Improvement":
+                basicCompetence.Improvment = value;
+                ImprovmentExplanation = Getexplan(value);
+                break;
+            case "WorkExcellent":
+                basicCompetence.WorkExcellent = value;
+                WorkExcellentExplanation = Getexplan(value);
+                break;
+        }
+    }
+
+    private string Getexplan(string value)
+    {
+        return value switch
+        {
+            "Kurang" => "Perlu diperbaiki",
+            "Cukup" => "Sudah baik, pertahankan",
+            "Baik" => "Sangat baik",
+            _ => ""
+        };
+    }
+
+
+    private async Task Save()
+    {
+        var url = $"https://localhost:7058/InsertBasicCompetence?userid={userid}&periode={periode}";
+        var response = await httpClient.PostAsJsonAsync(url, basicCompetence);
+        if (response.IsSuccessStatusCode)
+        {
+            await LoadData();
+        }
+        else
+        {
+            errorMessage = await response.Content.ReadAsStringAsync();
+        }
+
+    }
+}
+

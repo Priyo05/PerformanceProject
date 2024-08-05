@@ -62,3 +62,4 @@ C:\Users\1913\Desktop\PerformanceProject\src\Performance.Web.WebBlazor\bin\Debug
 C:\Users\1913\Desktop\PerformanceProject\src\Performance.Web.WebBlazor\obj\Debug\net8.0\Performance.Web.WebBlazor.csproj.AssemblyReference.cache
 C:\Users\1913\Desktop\PerformanceProject\src\Performance.Web.WebBlazor\obj\Debug\net8.0\Performance.Web.WebBlazor.MvcApplicationPartsAssemblyInfo.cs
 C:\Users\1913\Desktop\PerformanceProject\src\Performance.Web.WebBlazor\obj\Debug\net8.0\Performance.Web.WebBlazor.csproj.CopyComplete
+C:\Users\1913\Desktop\PerformanceProject\src\Performance.Web.WebBlazor\bin\Debug\net8.0\Blazored.LocalStorage.dll

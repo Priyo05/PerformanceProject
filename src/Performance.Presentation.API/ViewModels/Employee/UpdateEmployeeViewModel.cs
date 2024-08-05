@@ -1,8 +1,7 @@
-﻿using Microsoft.AspNetCore.Components;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace Performance.Presentation.API;
-public class RegisterViewModel
+namespace Performance.Presentation.API.ViewModels.Employee;
+public class UpdateEmployeeViewModel
 {
     public int Id { get; set; }
     [Required(ErrorMessage = "Firstname is required")]
@@ -12,6 +11,7 @@ public class RegisterViewModel
     public string Lastname { get; set; }
 
     [MaxLength(16, ErrorMessage = "NIK cannot exceed 16 characters")]
+    [MinLength(16, ErrorMessage = "NIK Must have exact 16 characters")]
     [Required(ErrorMessage = "NIK is required")]
     public string NIK { get; set; }
 
@@ -23,12 +23,4 @@ public class RegisterViewModel
 
     [Required(ErrorMessage = "Birthdate is required")]
     public DateTime Birthdate { get; set; }
-
-    [Required(ErrorMessage = "Password is required")]
-    public string Password { get; set; }
-
-    [Compare("Password", ErrorMessage = "Password not match")]
-    [Required(ErrorMessage = "RetypePassword is required")]
-    public string RetypePassword { get; set; }
 }
-

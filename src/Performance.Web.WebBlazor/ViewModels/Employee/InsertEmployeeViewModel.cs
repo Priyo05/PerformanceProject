@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Performance.Web.WebBlazor.ViewModels;
-public class RegisterEmployeeViewModel
+namespace Performance.Web.WebBlazor.ViewModels.Employee;
+public class InsertEmployeeViewModel
 {
     public int Id { get; set; }
     [Required(ErrorMessage = "Firstname is required")]
@@ -11,6 +11,7 @@ public class RegisterEmployeeViewModel
     public string Lastname { get; set; }
 
     [MaxLength(16, ErrorMessage = "NIK cannot exceed 16 characters")]
+    [MinLength(16, ErrorMessage = "NIK Must have exact 16 characters")]
     [Required(ErrorMessage = "NIK is required")]
     public string NIK { get; set; }
 

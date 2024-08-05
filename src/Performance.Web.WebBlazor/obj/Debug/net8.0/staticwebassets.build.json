@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "mdE+gBqAPgIxW/5jHiqfPJetbh5b9+9d05qC+6ZeqS4=",
+  "Hash": "8zd6gUdJIG5MBBr5sGb4oEQJwqp0Kdwudv2uXqij8n8=",
   "Source": "Performance.Web.WebBlazor",
   "BasePath": "_content/Performance.Web.WebBlazor",
   "Mode": "Default",
@@ -160,6 +160,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\favicon.png"
+    },
+    {
+      "Identity": "C:\\Users\\1913\\Desktop\\PerformanceProject\\src\\Performance.Web.WebBlazor\\wwwroot\\js\\site.js",
+      "SourceId": "Performance.Web.WebBlazor",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\1913\\Desktop\\PerformanceProject\\src\\Performance.Web.WebBlazor\\wwwroot\\",
+      "BasePath": "_content/Performance.Web.WebBlazor",
+      "RelativePath": "js/site.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\site.js"
     }
   ]
 }

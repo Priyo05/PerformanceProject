@@ -10,6 +10,7 @@ public static class ConfigureBussinesService
         services.AddScoped<IAuthRepository, AuthRepository>();
         services.AddScoped<IEmployeeRespository, EmployeeRepository>();
         services.AddScoped<IReportMainIndicatorRepository, ReportMainIndicatorRepository>();
+        services.AddScoped<IBasicCompetenceRepository, BasicCompetenceRespository>();
 
 
         return services;

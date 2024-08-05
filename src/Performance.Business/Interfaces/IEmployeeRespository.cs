@@ -9,5 +9,12 @@ namespace Performance.Business.Interfaces;
 public interface IEmployeeRespository
 {
     Profile GetUser(string name, string nik, string department);
+    List<Profile> GetAll(string? search, int pageNumber, int pageSize);
+    public int CountEmployees(string? search);
+    Profile InsertProfile(Profile profile);
+    User InsertUser(User user);
+    Profile GetById(int id);
+    Profile Updated(Profile profile);
+    Profile Delete(Profile profile);
 }
 

@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Performance.DataAccess", "s
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Performance.Presentation.API", "src\Performance.Presentation.API\Performance.Presentation.API.csproj", "{89BCCEAC-4844-40F1-8D56-FBAAA4281F6F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Performance.Web.WebBlazor", "src\Performance.Web.WebBlazor\Performance.Web.WebBlazor.csproj", "{409CDC4A-7B6A-4D35-8537-A51B876503C7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Performance.Web.WebBlazor", "src\Performance.Web.WebBlazor\Performance.Web.WebBlazor.csproj", "{409CDC4A-7B6A-4D35-8537-A51B876503C7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

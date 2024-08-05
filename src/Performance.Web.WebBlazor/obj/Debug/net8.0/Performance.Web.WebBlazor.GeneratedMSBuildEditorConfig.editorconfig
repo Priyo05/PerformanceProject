@@ -30,8 +30,20 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xBdXRoXExvZ2luLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/1913/Desktop/PerformanceProject/src/Performance.Web.WebBlazor/Components/Pages/Auth/RedirectLogin.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xBdXRoXFJlZGlyZWN0TG9naW4ucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/1913/Desktop/PerformanceProject/src/Performance.Web.WebBlazor/Components/Pages/Auth/Register.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xBdXRoXFJlZ2lzdGVyLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/1913/Desktop/PerformanceProject/src/Performance.Web.WebBlazor/Components/Pages/BasicCompetence/BasicCompetence.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xCYXNpY0NvbXBldGVuY2VcQmFzaWNDb21wZXRlbmNlLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/1913/Desktop/PerformanceProject/src/Performance.Web.WebBlazor/Components/Pages/BasicCompetence/BasicCompetenceTable.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xCYXNpY0NvbXBldGVuY2VcQmFzaWNDb21wZXRlbmNlVGFibGUucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/1913/Desktop/PerformanceProject/src/Performance.Web.WebBlazor/Components/Pages/Counter.razor]

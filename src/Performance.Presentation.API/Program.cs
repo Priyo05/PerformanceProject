@@ -3,6 +3,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Performance.DataAccess;
 using Performance.Presentation.API;
+using Performance.Presentation.API.Services;
 using Swashbuckle.AspNetCore.Filters;
 using System.Text;
 using System.Text.Json.Serialization;
@@ -19,6 +20,7 @@ services.AddBussinesService();
 services.AddScoped<AuthService>();
 services.AddScoped<EmployeeService>();
 services.AddScoped<ReportMainIndicatorService>();
+services.AddScoped<BasicCompetenceService>();
 
 builder.Services.AddControllers().AddJsonOptions(options =>
 {

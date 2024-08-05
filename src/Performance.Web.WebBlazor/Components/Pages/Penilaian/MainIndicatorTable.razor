@@ -82,7 +82,7 @@
     public int userid { get; set; }
     [Parameter]
     public int periode { get; set; }
-    private string errorMessage { get; set; }
+    private string? errorMessage { get; set; }
     private List<MainIndikatorViewModel> indikatorViewModel { get; set; } = new();
 
     protected override async Task OnInitializedAsync()
@@ -97,39 +97,31 @@
 
     private async Task LoadData()
     {
-        var url = $"https://localhost:7058/GetAllMainIndicatorUser?userid={userid}&periode={periode}";
-        var response = await httpClient.GetAsync(url);
-
-        if (response.IsSuccessStatusCode)
+        try
         {
-            var workmainindicators = await response.Content.ReadFromJsonAsync<List<Workmainindicator>>();
 
-            indikatorViewModel = workmainindicators.Select(c => new MainIndikatorViewModel
-                {
-                    Id = c.Id,
-                    StrategicObjective = c.StrategicObjective,
-                    KPI = c.Kpi,
-                    UnitOfMeasurement = c.UnitOfMeasurement,
-                    Bobot = c.Bobot,
-                    Polarisasi = c.Polarisasi,
-                    Target = c.Target,
-                    Aktual = c.Aktual,
-                    TingkatUnjukKerja = c.TingkatUnjukKerja,
-                    NilaiUnjukKerja = c.NilaiUnjukKerja,
-                    Periode = c.Period,
-                }).ToList();
+            var url = $"https://localhost:7058/GetAllMainIndicatorUser?userid={userid}&periode={periode}";
+            var response = await httpClient.GetAsync(url);
 
+            if (response.IsSuccessStatusCode)
+            {
+                indikatorViewModel = await response.Content.ReadFromJsonAsync<List<MainIndikatorViewModel>>(new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+            }
+            else
+            {
+                errorMessage = await response.Content.ReadAsStringAsync();
+                Console.WriteLine("API Error: " + errorMessage);
+            }
         }
-        else
+        catch (Exception ex)
         {
-            errorMessage = await response.Content.ReadAsStringAsync();
-            Console.WriteLine("API Error: " + errorMessage);
+            errorMessage = ex.Message;
         }
     }
 
     private async Task DeleteMainReport(int id)
     {
-        bool confirmed = await JsRuntime.InvokeAsync<bool>("confirm", "Are you sure?");
+        bool confirmed = await JsRuntime.InvokeAsync<bool>("confirm", "Are you sure want to delete this?");
 
         if (confirmed)
         {

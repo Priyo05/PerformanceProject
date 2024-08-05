@@ -87,15 +87,7 @@
         if (response.IsSuccessStatusCode)
         {
 
-            var workmainindicators = await response.Content.ReadFromJsonAsync<Workmainindicator>();
-            MainIndikator.StrategicObjective = workmainindicators.StrategicObjective;
-            MainIndikator.KPI = workmainindicators.Kpi;
-            MainIndikator.UnitOfMeasurement = workmainindicators.UnitOfMeasurement;
-            MainIndikator.Bobot = workmainindicators.Bobot;
-            MainIndikator.Polarisasi = workmainindicators.Polarisasi;
-            MainIndikator.Target = workmainindicators.Target;
-            MainIndikator.Aktual = workmainindicators.Aktual;
-            MainIndikator.Periode = workmainindicators.Period;
+            MainIndikator = await response.Content.ReadFromJsonAsync<MainIndikatorViewModel>(new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
 
         }
         else

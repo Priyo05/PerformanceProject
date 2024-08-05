@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Performance.Web.WebBlazor.ViewModels;
+namespace Performance.Web.WebBlazor.ViewModels.MainIndicatorAppraisal;
 public class MainIndikatorViewModel
 {
     public int Id { get; set; }

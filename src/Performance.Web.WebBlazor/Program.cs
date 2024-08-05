@@ -1,4 +1,7 @@
+using Blazored.LocalStorage;
 using Performance.Web.WebBlazor.Components;
+using Performance.Web.WebBlazor.Handler;
+using Performance.Web.WebBlazor.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,6 +10,11 @@ builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
 builder.Services.AddHttpClient();
+
+
+
+builder.Services.AddBlazoredLocalStorage();
+builder.Services.AddAuthorizationCore();
 
 var app = builder.Build();
 
@@ -22,6 +30,7 @@ app.UseHttpsRedirection();
 
 app.UseStaticFiles();
 app.UseAntiforgery();
+
 
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode();
