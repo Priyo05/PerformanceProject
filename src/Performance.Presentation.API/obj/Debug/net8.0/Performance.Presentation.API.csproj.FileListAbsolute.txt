@@ -53,3 +53,9 @@ C:\Users\1913\Desktop\PerformanceProject\src\Performance.Presentation.API\bin\De
 C:\Users\1913\Desktop\PerformanceProject\src\Performance.Presentation.API\bin\Debug\net8.0\Swashbuckle.AspNetCore.Filters.dll
 C:\Users\1913\Desktop\PerformanceProject\src\Performance.Presentation.API\bin\Debug\net8.0\Swashbuckle.AspNetCore.Filters.Abstractions.dll
 C:\Users\1913\Desktop\PerformanceProject\src\Performance.Presentation.API\bin\Debug\net8.0\System.IdentityModel.Tokens.Jwt.dll
+C:\Users\1913\Desktop\PerformanceProject\src\Performance.Presentation.API\bin\Debug\net8.0\Microsoft.AspNetCore.Authorization.dll
+C:\Users\1913\Desktop\PerformanceProject\src\Performance.Presentation.API\bin\Debug\net8.0\Microsoft.AspNetCore.Components.dll
+C:\Users\1913\Desktop\PerformanceProject\src\Performance.Presentation.API\bin\Debug\net8.0\Microsoft.AspNetCore.Metadata.dll
+C:\Users\1913\Desktop\PerformanceProject\src\Performance.Presentation.API\bin\Debug\net8.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+C:\Users\1913\Desktop\PerformanceProject\src\Performance.Presentation.API\bin\Debug\net8.0\Microsoft.Extensions.Logging.Abstractions.dll
+C:\Users\1913\Desktop\PerformanceProject\src\Performance.Presentation.API\bin\Debug\net8.0\Microsoft.Extensions.Options.dll

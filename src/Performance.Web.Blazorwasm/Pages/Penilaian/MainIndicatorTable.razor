@@ -1,0 +1,149 @@
+﻿@inject NavigationManager navigator
+@inject HttpClient httpClient
+@inject IJSRuntime JsRuntime
+
+
+
+<div class="card mt-3">
+
+    <div class="card-header">
+        A. Indikator Utama Kinerja
+    </div>
+
+    <table class="performance-table table">
+        <thead>
+            <tr>
+                <th colspan="4">Indikator Utama Kinerja</th>
+            </tr>
+            <tr>
+                <th>No.</th>
+                <th>Strategic Objective</th>
+                <th>KPI</th>
+                <th>Unit of Measurement</th>
+                <th>Bobot (a) %</th>
+                <th>Polarisasi</th>
+                <th>Target</th>
+                <th>Aktual</th>
+                <th>Tingkat Unjuk Kerja (b)</th>
+                <th>Nilai Unjuk Kerja (a x b)</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (indikatorViewModel.Count > 0)
+            {
+                @for (int i = 0; i < indikatorViewModel.Count; i++)
+                {
+                    var row = indikatorViewModel[i];
+                    <tr>
+                        <td>@(i + 1)</td>
+                        <td>@row.StrategicObjective</td>
+                        <td>@row.KPI</td>
+                        <td>@row.UnitOfMeasurement</td>
+                        <td>@row.Bobot</td>
+                        <td>@row.Polarisasi</td>
+                        <td>@row.Target</td>
+                        <td>@row.Aktual</td>
+                        <td>@row.TingkatUnjukKerja</td>
+                        <td>@row.NilaiUnjukKerja</td>
+                        <td>
+                            <a href="@($"/editmain/{row.Id}")" class="btn btn-primary">
+                                Edit
+                            </a>
+                            <button class="btn btn-danger mt-1" @onclick="() => DeleteMainReport(row.Id)">Delete</button>
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="11">No data Available</td>
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="9">Nilai (A)</td>
+                <td>@indikatorViewModel.Sum(row => row.NilaiUnjukKerja)</td>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+
+<a href="@($"/add-main-indicator-report/{userid}/{periode}")">
+    <button class="btn btn-primary mt-1">Add</button>
+</a>
+
+
+@code {
+    [Parameter]
+    public int userid { get; set; }
+    [Parameter]
+    public int periode { get; set; }
+    private string? errorMessage { get; set; }
+    private List<MainIndikatorViewModel> indikatorViewModel { get; set; } = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadData();
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        await LoadData();
+    }
+
+    private async Task LoadData()
+    {
+        try
+        {
+
+            var url = $"https://localhost:7058/GetAllMainIndicatorUser?userid={userid}&periode={periode}";
+            var response = await httpClient.GetAsync(url);
+
+            if (response.IsSuccessStatusCode)
+            {
+                indikatorViewModel = await response.Content.ReadFromJsonAsync<List<MainIndikatorViewModel>>(new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+            }
+            else
+            {
+                errorMessage = await response.Content.ReadAsStringAsync();
+                Console.WriteLine("API Error: " + errorMessage);
+            }
+        }
+        catch (Exception ex)
+        {
+            errorMessage = ex.Message;
+        }
+    }
+
+    private async Task DeleteMainReport(int id)
+    {
+        bool confirmed = await JsRuntime.InvokeAsync<bool>("confirm", "Are you sure want to delete this?");
+
+        if (confirmed)
+        {
+            var url = $"https://localhost:7058/DeleteMainIndicator/{id}";
+            var response = await httpClient.DeleteAsync(url);
+
+            if (response.IsSuccessStatusCode)
+            {
+                await LoadData();
+            }
+            else
+            {
+                errorMessage = await response.Content.ReadAsStringAsync();
+                Console.WriteLine("API Error: " + errorMessage);
+            }
+        }
+        else
+        {
+            await LoadData();
+        }
+
+    }
+
+
+
+}

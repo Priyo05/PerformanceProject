@@ -61,6 +61,16 @@ builder.Services.AddSwaggerGen(
 
 var allowedSpecificOrigin = "_performance";
 
+builder.Services.AddCors(options
+    => options
+    .AddPolicy(name: allowedSpecificOrigin,
+               policy => policy.WithOrigins("https://localhost:7145")
+                               .AllowAnyMethod()
+                               .AllowAnyHeader()
+                               .AllowCredentials())
+    );
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -70,8 +80,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-
 app.UseCors(allowedSpecificOrigin);
+app.UseHttpsRedirection();
+app.UseStaticFiles();
 
 
 app.UseHttpsRedirection();

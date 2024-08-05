@@ -1,0 +1,85 @@
+﻿@page "/login"
+@layout LoginLayout
+@inject HttpClient httpClient
+@inject NavigationManager navigator
+@inject ILocalStorageService localStorage
+@inject AuthenticationStateProvider _authStateProvider
+
+<h3>Silakan Login</h3>
+
+<EditForm Model="loginViewModel" FormName="Log" OnValidSubmit="HandleLogin">
+    <div class="text_field mb-4">
+        <label for="username">Username</label>
+        <InputText id="username" class="form-control" @bind-Value="loginViewModel.Username" />
+        <ValidationMessage For="() => loginViewModel.Username" />
+    </div>
+    <div class="text_field mb-4">
+        <label for="password">Password</label>
+        <InputText id="password" type="password" class="form-control" @bind-Value="loginViewModel.Password" />
+        <ValidationMessage For="() => loginViewModel.Password" />
+    </div>
+    <div class="text_field mb-4">
+        <label for="role">Role</label>
+        <InputSelect class="form-control" @bind-Value="loginViewModel.Role">
+            <option value="">Select Role</option>
+            @foreach (var role in roles)
+            {
+                <option value="@role.Value">@role.Text</option>
+            }
+        </InputSelect>
+        <ValidationMessage For="() => loginViewModel.Role" />
+    </div>
+    <div class="text-center mb-3">
+        <span class="text-danger">@errorMessage</span>
+    </div>
+    <input type="submit" value="Login" class="btn btn-primary mb-4" />
+
+    <DataAnnotationsValidator />
+</EditForm>
+
+@code {
+    [SupplyParameterFromForm]
+    public LoginViewModel loginViewModel { get; set; } = new();
+
+    private string? errorMessage { get; set; }
+
+    public class OptionRole
+    {
+        public string Value { get; set; }
+        public string Text { get; set; }
+    }
+
+    private List<OptionRole> roles = new List<OptionRole>
+    {
+        new OptionRole { Text = "Admin", Value = "Admin" },
+        new OptionRole { Text = "Employee", Value = "Employee" }
+    };
+
+
+
+    private async Task HandleLogin()
+    {
+        try
+        {
+            var response = await httpClient.PostAsJsonAsync("https://localhost:7058/api/Auth/Login", loginViewModel);
+
+            if (response.IsSuccessStatusCode)
+            {
+                var tokenResponse = await response.Content.ReadFromJsonAsync<TokenRespondDto>();
+                await localStorage.SetItemAsync("AuthToken", tokenResponse.Token);
+                (_authStateProvider as CustomAuthProvider).NotifyAuthState();
+                navigator.NavigateTo("/");
+            }
+            else
+            {
+                errorMessage = await response.Content.ReadAsStringAsync();
+            }
+        }
+        catch (Exception ex)
+        {
+            errorMessage = ex.Message;
+        }
+    }
+
+
+}

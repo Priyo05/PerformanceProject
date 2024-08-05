@@ -1,0 +1,90 @@
+﻿@page "/register"
+@layout LoginLayout
+@inject NavigationManager navigator
+@inject HttpClient httpClient
+
+<h3>Register</h3>
+
+<EditForm Model="@viewModel" FormName="reg" OnValidSubmit="HandleRegister">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div class="text_field mb-2">
+        <label for="Title">Title</label>
+        <InputSelect id="Title" class="form-control" @bind-Value="viewModel.Title">
+            <option value="">Title</option>
+            @foreach (var title in Titles)
+            {
+                <option value="@title">@title</option>
+            }
+        </InputSelect>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="text_field mb-2">
+                <label for="Firstname">Firstname</label>
+                <InputText id="Firstname" class="form-control" @bind-Value="viewModel.Firstname" />
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="text_field mb-2">
+                <label for="Lastname">Lastname</label>
+                <InputText id="Lastname" class="form-control" @bind-Value="viewModel.Lastname" />
+            </div>
+        </div>
+    </div>
+    <div class="text_field mb-2">
+        <label for="NIK">NIK</label>
+        <InputText id="NIK" class="form-control" @bind-Value="viewModel.NIK" />
+    </div>
+    <div class="text_field mb-2">
+        <label for="Department">Department</label>
+        <InputText id="Department" class="form-control" @bind-Value="viewModel.Department" />
+    </div>
+    <div class="text_field mb-2">
+        <label for="Birthdate">Birthdate</label>
+        <InputDate id="Birthdate" class="form-control" @bind-Value="viewModel.Birthdate" />
+    </div>
+    <div class="text_field mb-2">
+        <label for="Password">Password</label>
+        <InputText id="Password" type="password" class="form-control" @bind-Value="viewModel.Password" />
+    </div>
+    <div class="text_field mb-2">
+        <label for="RetypePassword">Retype Password</label>
+        <InputText id="RetypePassword" type="password" class="form-control" @bind-Value="viewModel.RetypePassword" />
+    </div>
+
+    <button type="submit" class="btn btn-primary mb-1">Register</button>
+
+    <NavLink class="nav-link" href="/login">
+        <span>Back to Login</span>
+    </NavLink>
+</EditForm>
+
+@code {
+
+    [SupplyParameterFromForm(FormName = "reg")]
+    public RegisterViewModel viewModel { get; set; } = new();
+
+    private List<string> Titles = new List<string>
+    {
+        "Mr. ",
+        "Ms. "
+    };
+
+    private void HandleRegister()
+    {
+        try
+        {
+
+            // authservice.RegisterAdm(viewModel);
+            httpClient.PostAsJsonAsync("https://localhost:7058/api/Auth/Register", viewModel);
+            navigator.NavigateTo("/login");
+        } 
+        catch (Exception e)
+        {
+            Console.WriteLine("Error :"+ e.Message);
+        }
+    }
+
+}
