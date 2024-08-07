@@ -21,6 +21,7 @@ services.AddScoped<AuthService>();
 services.AddScoped<EmployeeService>();
 services.AddScoped<ReportMainIndicatorService>();
 services.AddScoped<BasicCompetenceService>();
+services.AddScoped<ReddictionService>();
 
 builder.Services.AddControllers().AddJsonOptions(options =>
 {

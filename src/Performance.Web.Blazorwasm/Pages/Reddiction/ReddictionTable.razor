@@ -1,0 +1,160 @@
+﻿@inject IHttpClientFactory _httpclientfactory
+
+<div class="card mt-3">
+
+    <div class="card-header">
+        D. Pengurangan / Penambahan Nilai
+    </div>
+
+    <table class="performance-table table">
+        <thead>
+            <tr>
+                <th>No.</th>
+                <th>Uraian</th>
+                <th>Pengurangan</th>
+                <th>Penambahan</th>
+                <th>Nilai</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (reddictionIndexView?.Reddictions != null)
+            {
+                @for (int i = 0; i < reddictionIndexView.Reddictions.Count; i++)
+                {
+                    var j = i;
+                    var row = reddictionIndexView.Reddictions[i];
+                    <tr>
+                        <td>@(i + 1)</td>
+                        <td>@row.IndicatorName</td>
+                        <td>
+                            <input type="radio" name="tipeNilai_@i" value="Pengurangan" @onchange="(e => HandleRadioChange(j,Pengurangan))" checked="@(row.IndicatorType == "Pengurangan")" />
+                        </td>
+                        <td>
+                            <input type="radio" name="tipeNilai_@i" value="Penambahan" @onchange="(e => HandleRadioChange(j,Penambahan))" checked="@(row.IndicatorType == "Penambahan")" />
+                        </td>
+                        <td>
+                            @row.value
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="5">No data available</td>
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="4">Nilai (D)</td>
+                <td>
+                    @reddictionIndexView.TotalValue
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+
+<div class="mt-2 d-flex justify-content-between">
+    <div>
+        <button class="btn btn-warning" @onclick="() => Add()">Add</button>
+    </div>
+    <div>
+        <button class="btn btn-primary" @onclick="() => Save()">Save</button>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public int userid { get; set; }
+    [Parameter]
+    public int periode { get; set; }
+    private string? errorMessage { get; set; }
+    private string Pengurangan = "Pengurangan";
+    private string Penambahan = "Penambahan";
+
+
+    private ReddictionIndexViewModel reddictionIndexView { get; set; } = new();
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadData();
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        await LoadData();
+    }
+
+    private async Task LoadData()
+    {
+        try
+        {
+            var httpClient = _httpclientfactory.CreateClient("API");
+            var url = $"GetReddictionuser?userid={userid}&periode={periode}";
+            var response = await httpClient.GetAsync(url);
+
+            if (response.IsSuccessStatusCode)
+            {
+                reddictionIndexView = await response.Content.ReadFromJsonAsync<ReddictionIndexViewModel>(new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+            }
+            else
+            {
+                errorMessage = await response.Content.ReadAsStringAsync();
+            }
+        }
+        catch (Exception ex)
+        {
+            errorMessage = ex.Message;
+        }
+    }
+
+    private void HandleRadioChange(int index, string competency)
+    {
+        var selectedIndicator = reddictionIndexView.Reddictions[index];
+        selectedIndicator.IndicatorType = competency;
+        selectedIndicator.value = Getexplan(competency);
+        UpdateTotalValue();
+        StateHasChanged();
+    }
+
+    private void UpdateTotalValue()
+    {
+        reddictionIndexView.TotalValue = reddictionIndexView.Reddictions
+            .Sum(r => Getexplan(r.IndicatorType));
+    }
+
+    private int Getexplan(string value)
+    {
+        return value switch
+        {
+            "Pengurangan" => -20,
+            "Penambahan" => 20,
+            _ => 0
+        };
+    }
+
+    private async Task Save()
+    {
+        var httpClient = _httpclientfactory.CreateClient("API");
+        var url = $"UpdateIndicator";
+        var response = await httpClient.PutAsJsonAsync(url, reddictionIndexView.Reddictions);
+        if (response.IsSuccessStatusCode)
+        {
+            await LoadData();
+        }
+        else
+        {
+            errorMessage = await response.Content.ReadAsStringAsync();
+        }
+
+    }
+
+    private async Task Add()
+    {
+        
+    }
+
+}

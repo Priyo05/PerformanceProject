@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Performance.DataAccess", "s
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Performance.Presentation.API", "src\Performance.Presentation.API\Performance.Presentation.API.csproj", "{89BCCEAC-4844-40F1-8D56-FBAAA4281F6F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Performance.Web.Blazorwasm", "src\Performance.Web.Blazorwasm\Performance.Web.Blazorwasm.csproj", "{AFD576A6-2237-4A5E-8CC0-BDB5B63D9F59}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Performance.Web.Blazorwasm", "src\Performance.Web.Blazorwasm\Performance.Web.Blazorwasm.csproj", "{AFD576A6-2237-4A5E-8CC0-BDB5B63D9F59}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

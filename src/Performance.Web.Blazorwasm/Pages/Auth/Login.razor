@@ -1,8 +1,8 @@
 ﻿@page "/login"
 @layout LoginLayout
-@inject HttpClient httpClient
 @inject NavigationManager navigator
 @inject ILocalStorageService localStorage
+@inject IHttpClientFactory _httpclientfactory
 @inject AuthenticationStateProvider _authStateProvider
 
 <h3>Silakan Login</h3>
@@ -61,7 +61,8 @@
     {
         try
         {
-            var response = await httpClient.PostAsJsonAsync("https://localhost:7058/api/Auth/Login", loginViewModel);
+            var httpClient = _httpclientfactory.CreateClient("API");
+            var response = await httpClient.PostAsJsonAsync("api/Auth/Login", loginViewModel);
 
             if (response.IsSuccessStatusCode)
             {

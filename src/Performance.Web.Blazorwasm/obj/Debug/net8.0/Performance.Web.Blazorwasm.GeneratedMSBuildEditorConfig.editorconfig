@@ -50,10 +50,6 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQmFzaWNDb21wZXRlbmNlXEJhc2ljQ29tcGV0ZW5jZVRhYmxlLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/1913/Desktop/PerformanceProject/src/Performance.Web.Blazorwasm/Pages/Counter.razor]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ291bnRlci5yYXpvcg==
-build_metadata.AdditionalFiles.CssScope = 
-
 [C:/Users/1913/Desktop/PerformanceProject/src/Performance.Web.Blazorwasm/Pages/Employee/Add-Employee.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRW1wbG95ZWVcQWRkLUVtcGxveWVlLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
@@ -82,8 +78,12 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUGVuaWxhaWFuXE1haW5JbmRpY2F0b3JUYWJsZS5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/1913/Desktop/PerformanceProject/src/Performance.Web.Blazorwasm/Pages/Weather.razor]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcV2VhdGhlci5yYXpvcg==
+[C:/Users/1913/Desktop/PerformanceProject/src/Performance.Web.Blazorwasm/Pages/Reddiction/Reddiction.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUmVkZGljdGlvblxSZWRkaWN0aW9uLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/1913/Desktop/PerformanceProject/src/Performance.Web.Blazorwasm/Pages/Reddiction/ReddictionTable.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUmVkZGljdGlvblxSZWRkaWN0aW9uVGFibGUucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/1913/Desktop/PerformanceProject/src/Performance.Web.Blazorwasm/_Imports.razor]

@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Performance.Presentation.API.ViewModels.Employee;
 
 namespace Performance.Presentation.API.Controllers;
 [Route("api/[controller]")]
 [ApiController]
+[Authorize]
 public class EmployeeController : ControllerBase
 {
     private EmployeeService _employeeService;
@@ -15,6 +17,7 @@ public class EmployeeController : ControllerBase
     }
 
     [HttpGet]
+    [Authorize]
     public IActionResult GetAll(string? search,int pageNumber = 1)
     {
         int pageSize = 5;
@@ -25,6 +28,7 @@ public class EmployeeController : ControllerBase
 
 
     [HttpPost("AddEmployee")]
+    [Authorize(Roles = "Admin")]
     public IActionResult Insert(InsertEmployeeViewModel viewModel)
     {
         try
@@ -41,6 +45,7 @@ public class EmployeeController : ControllerBase
     }
 
     [HttpGet("{id}")]
+    [Authorize(Roles = "Admin")]
     public IActionResult GetById(int id)
     {
         if (id < 0)
@@ -54,6 +59,7 @@ public class EmployeeController : ControllerBase
     }
 
     [HttpPut("{id}")]
+    [Authorize(Roles ="Admin")]
     public IActionResult Update(int id, UpdateEmployeeViewModel viewModel)
     {
         try
@@ -70,6 +76,7 @@ public class EmployeeController : ControllerBase
 
 
     [HttpDelete("{id}")]
+    [Authorize(Roles = "Admin")]
     public IActionResult Delete(int id)
     {
         try

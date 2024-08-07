@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Query.Expressions.Internal;
@@ -7,6 +8,7 @@ using Performance.Presentation.API.ViewModels.MainIndicatorAppraisal;
 namespace Performance.Presentation.API.Controllers;
 [Route("api/[controller]")]
 [ApiController]
+[Authorize(Roles = "Admin")]
 public class ReportMainIndicatorController : ControllerBase
 {
     private readonly ReportMainIndicatorService _reportService;
@@ -19,6 +21,7 @@ public class ReportMainIndicatorController : ControllerBase
     }
 
     [HttpGet("/GetUser")]
+    [Authorize(Roles = "Admin")]
     public IActionResult GetUser(string name,string nik, string department)
     {
         try
@@ -34,6 +37,7 @@ public class ReportMainIndicatorController : ControllerBase
     }
 
     [HttpGet("/GetAllMainIndicatorUser")]
+    [Authorize(Roles = "Admin")]
     public IActionResult GetMainIndicatorUser(int userid, int periode)
     {
         try
@@ -49,6 +53,7 @@ public class ReportMainIndicatorController : ControllerBase
     }
 
     [HttpPost("/CreateReport/{userid}/{periode}")]
+    [Authorize(Roles = "Admin")]
     public IActionResult CreateReport(int userid, int periode)
     {
         try
@@ -63,6 +68,7 @@ public class ReportMainIndicatorController : ControllerBase
     }
 
     [HttpGet("/GetMainIndicatorById/{id}")]
+    [Authorize(Roles = "Admin")]
     public IActionResult GetMainIndicatorById(int id)
     {
         try
@@ -77,6 +83,7 @@ public class ReportMainIndicatorController : ControllerBase
     }
 
     [HttpPost("/InsertMainIndicator/{userid}/{periode}")]
+    [Authorize(Roles = "Admin")]
     public IActionResult Insert(MainIndikatorViewModel viewModel,int userid,int periode)
     {
         try
@@ -92,6 +99,7 @@ public class ReportMainIndicatorController : ControllerBase
     }
 
     [HttpPut("/UpdateMainIndicator/{id}")]
+    [Authorize(Roles = "Admin")]
     public IActionResult UpdateMainIndicator(int id, MainIndikatorViewModel model)
     {
         try
@@ -107,6 +115,7 @@ public class ReportMainIndicatorController : ControllerBase
     }
 
     [HttpDelete("/DeleteMainIndicator/{id}")]
+    [Authorize(Roles = "Admin")]
     public IActionResult DeleteMainIndicator(int id)
     {
         try

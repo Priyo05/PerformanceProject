@@ -1,74 +1,83 @@
 ﻿@page "/basicCompetence"
-@inject HttpClient httpClient
+@inject IHttpClientFactory _httpclientfactory
 
-
-<div class="card">
-    <div class="card-header">
-        Masukan Employee
-    </div>
-    <EditForm Model="searchViewModel" FormName="CheckBasic" OnValidSubmit="CheckUser" class="form-control">
-        <div class="row">
-            <div class="col-md-3">
-                <div class="text_field mb-2">
-                    <label for="name">name</label>
-                    <InputText id="name" class="form-control" @bind-Value="searchViewModel.Name" />
-                    <ValidationMessage For="() => searchViewModel.Name" />
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="text_field mb-2">
-                    <label for="NIK">NIK</label>
-                    <InputText id="NIK" class="form-control" @bind-Value="searchViewModel.NIK" />
-                    <ValidationMessage For="() => searchViewModel.NIK" />
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="text_field mb-2">
-                    <label for="department">Department</label>
-                    <InputText id="department" class="form-control" @bind-Value="searchViewModel.Department" />
-                    <ValidationMessage For="() => searchViewModel.Department" />
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="text_field mb-2">
-                    <label for="periode">Periode</label>
-                    <InputNumber id="periode" class="form-control" @bind-Value="searchViewModel.Periode" />
-                    <ValidationMessage For="() => searchViewModel.Periode" />
-                </div>
-            </div>
-        </div>
-        <DataAnnotationsValidator />
-        @* <ValidationSummary /> *@
-        <button type="submit" class="btn btn-primary mb-1">Search</button>
-    </EditForm>
-</div>
-
-@if (isUserChecked)
-{
-    @if (userExists)
-    {
-        @if (reportExists)
+<AuthorizeView Context="AuthContext">
+    <Authorized>
+        @if (@AuthContext.User.IsInRole("Admin"))
         {
-            <BasicCompetenceTable userid="userid" periode="searchViewModel.Periode" />
-        }
-        else if (isReportChecked)
-        {
-            <div class="alert alert-danger mt-3">
-                @errorMessage
+            <div class="card">
+                <div class="card-header">
+                    Masukan Employee
+                </div>
+                <EditForm Model="searchViewModel" FormName="CheckBasic" OnValidSubmit="CheckUser" class="form-control">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="text_field mb-2">
+                                <label for="name">name</label>
+                                <InputText id="name" class="form-control" @bind-Value="searchViewModel.Name" />
+                                <ValidationMessage For="() => searchViewModel.Name" />
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="text_field mb-2">
+                                <label for="NIK">NIK</label>
+                                <InputText id="NIK" class="form-control" @bind-Value="searchViewModel.NIK" />
+                                <ValidationMessage For="() => searchViewModel.NIK" />
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="text_field mb-2">
+                                <label for="department">Department</label>
+                                <InputText id="department" class="form-control" @bind-Value="searchViewModel.Department" />
+                                <ValidationMessage For="() => searchViewModel.Department" />
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="text_field mb-2">
+                                <label for="periode">Periode</label>
+                                <InputNumber id="periode" class="form-control" @bind-Value="searchViewModel.Periode" />
+                                <ValidationMessage For="() => searchViewModel.Periode" />
+                            </div>
+                        </div>
+                    </div>
+                    <DataAnnotationsValidator />
+                    @* <ValidationSummary /> *@
+                    <button type="submit" class="btn btn-primary mb-1">Search</button>
+                </EditForm>
             </div>
-            <button class="btn btn-primary" @onclick="CreateReportFirst">Buat Report</button>
+            @if (isUserChecked)
+            {
+                @if (userExists)
+                {
+                    @if (reportExists)
+                    {
+                        <BasicCompetenceTable userid="userid" periode="searchViewModel.Periode" />
+                    }
+                    else if (isReportChecked)
+                    {
+                        <div class="alert alert-danger mt-3">
+                            @errorMessage
+                        </div>
+                        <button class="btn btn-primary" @onclick="CreateReportFirst">Buat Report</button>
+                    }
+                }
+                else
+                {
+                    <div class="alert alert-danger mt-3">
+                        @errorMessage
+                    </div>
+                }
+            }
         }
-    }
-    else
-    {
-        <div class="alert alert-danger mt-3">
-            @errorMessage
-        </div>
-    }
-
-}
-
-
+        else
+        {
+            <h1>You are not authorized</h1>
+        }
+    </Authorized>
+    <NotAuthorized>
+        <Performance.Web.Blazorwasm.Pages.Auth.RedirectLogin></Performance.Web.Blazorwasm.Pages.Auth.RedirectLogin>
+    </NotAuthorized>
+</AuthorizeView>
 
 @code {
     [SupplyParameterFromForm(FormName = "CheckBasic")]
@@ -84,8 +93,8 @@
 
     private async Task CheckUser()
     {
-        var url = $"https://localhost:7058/GetUser?name={Uri.EscapeDataString(searchViewModel.Name)}&nik={Uri.EscapeDataString(searchViewModel.NIK)}&department={Uri.EscapeDataString(searchViewModel.Department)}";
-
+        var httpClient = _httpclientfactory.CreateClient("API");
+        var url = $"GetUser?name={Uri.EscapeDataString(searchViewModel.Name)}&nik={Uri.EscapeDataString(searchViewModel.NIK)}&department={Uri.EscapeDataString(searchViewModel.Department)}";
         var response = await httpClient.GetAsync(url);
 
         if (response.IsSuccessStatusCode)
@@ -118,8 +127,8 @@
     private async Task CheckReport()
     {
 
-        var url = $"https://localhost:7058/GetBasicCompetenceUser?userid={userid}&periode={searchViewModel.Periode}";
-    
+        var httpClient = _httpclientfactory.CreateClient("API");
+        var url = $"GetBasicCompetenceUser?userid={userid}&periode={searchViewModel.Periode}";
         var response = await httpClient.GetAsync(url);
 
         isReportChecked = true;
@@ -150,7 +159,8 @@
 
     private async Task CreateReportFirst()
     {
-        var url = $"https://localhost:7058/CreateReport/{userid}/{searchViewModel.Periode}";
+        var httpClient = _httpclientfactory.CreateClient("API");
+        var url = $"CreateReport/{userid}/{searchViewModel.Periode}";
         var response = await httpClient.PostAsJsonAsync(url, (userid, searchViewModel.Periode));
 
         if (response.IsSuccessStatusCode)

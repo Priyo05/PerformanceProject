@@ -1,4 +1,4 @@
-﻿@page "/register"
+﻿@page "/registeraccount"
 @layout LoginLayout
 @inject NavigationManager navigator
 @inject HttpClient httpClient
@@ -77,7 +77,6 @@
         try
         {
 
-            // authservice.RegisterAdm(viewModel);
             httpClient.PostAsJsonAsync("https://localhost:7058/api/Auth/Register", viewModel);
             navigator.NavigateTo("/login");
         } 

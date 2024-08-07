@@ -11,6 +11,7 @@ public static class ConfigureBussinesService
         services.AddScoped<IEmployeeRespository, EmployeeRepository>();
         services.AddScoped<IReportMainIndicatorRepository, ReportMainIndicatorRepository>();
         services.AddScoped<IBasicCompetenceRepository, BasicCompetenceRespository>();
+        services.AddScoped<IReddictionRepository, ReddictionRepository>();
 
 
         return services;

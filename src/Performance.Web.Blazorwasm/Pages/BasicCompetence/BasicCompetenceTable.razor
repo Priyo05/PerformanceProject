@@ -1,4 +1,4 @@
-﻿@inject HttpClient httpClient
+﻿@inject IHttpClientFactory _httpclientfactory
 
 <div class="card mt-3">
 
@@ -184,28 +184,21 @@
     protected override async Task OnInitializedAsync()
     {
         await LoadData();
-        CustomerFocusExplanation = Getexplan(basicCompetence.CustomerFocus);
-        IntegrityExplanation = Getexplan(basicCompetence.Integrity);
-        TeamworkExplanation = Getexplan(basicCompetence.Teamwork);
-        ImprovmentExplanation = Getexplan(basicCompetence.Improvment);
-        WorkExcellentExplanation = Getexplan(basicCompetence.WorkExcellent);
+        Explanation();
     }
 
     protected override async Task OnParametersSetAsync()
     {
         await LoadData();
-        CustomerFocusExplanation = Getexplan(basicCompetence.CustomerFocus);
-        IntegrityExplanation = Getexplan(basicCompetence.Integrity);
-        TeamworkExplanation = Getexplan(basicCompetence.Teamwork);
-        ImprovmentExplanation = Getexplan(basicCompetence.Improvment);
-        WorkExcellentExplanation = Getexplan(basicCompetence.WorkExcellent);
+        Explanation();
     }
 
     private async Task LoadData()
     {
         try
         {
-            var url = $"https://localhost:7058/GetBasicCompetenceUser?userid={userid}&periode={periode}";
+            var httpClient = _httpclientfactory.CreateClient("API");
+            var url = $"GetBasicCompetenceUser?userid={userid}&periode={periode}";
             var response = await httpClient.GetAsync(url);
 
             if (response.IsSuccessStatusCode)
@@ -266,8 +259,9 @@
 
     private async Task Save()
     {
-        var url = $"https://localhost:7058/InsertBasicCompetence?userid={userid}&periode={periode}";
-        var response = await httpClient.PostAsJsonAsync(url, basicCompetence);
+        var httpClient = _httpclientfactory.CreateClient("API");
+        var url = $"BasicCompetenceValue?userid={userid}&periode={periode}";
+        var response = await httpClient.PutAsJsonAsync(url, basicCompetence);
         if (response.IsSuccessStatusCode)
         {
             await LoadData();
@@ -278,5 +272,15 @@
         }
 
     }
+
+    private void Explanation()
+    {
+        CustomerFocusExplanation = Getexplan(basicCompetence.CustomerFocus);
+        IntegrityExplanation = Getexplan(basicCompetence.Integrity);
+        TeamworkExplanation = Getexplan(basicCompetence.Teamwork);
+        ImprovmentExplanation = Getexplan(basicCompetence.Improvment);
+        WorkExcellentExplanation = Getexplan(basicCompetence.WorkExcellent);
+    }
+
 }
 

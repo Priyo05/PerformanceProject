@@ -1,5 +1,5 @@
 ﻿@inject NavigationManager navigator
-@inject HttpClient httpClient
+@inject IHttpClientFactory _httpclientfactory
 @inject IJSRuntime JsRuntime
 
 
@@ -71,8 +71,8 @@
     </table>
 </div>
 
-<a href="@($"/add-main-indicator-report/{userid}/{periode}")">
-    <button class="btn btn-primary mt-1">Add</button>
+<a href="@($"/add-main-indicator-report/{userid}/{periode}")" class="btn btn-primary mt-1">
+    Add
 </a>
 
 
@@ -98,8 +98,8 @@
     {
         try
         {
-
-            var url = $"https://localhost:7058/GetAllMainIndicatorUser?userid={userid}&periode={periode}";
+            var httpClient = _httpclientfactory.CreateClient("API");
+            var url = $"GetAllMainIndicatorUser?userid={userid}&periode={periode}";
             var response = await httpClient.GetAsync(url);
 
             if (response.IsSuccessStatusCode)
@@ -124,7 +124,8 @@
 
         if (confirmed)
         {
-            var url = $"https://localhost:7058/DeleteMainIndicator/{id}";
+            var httpClient = _httpclientfactory.CreateClient("API");
+            var url = $"DeleteMainIndicator/{id}";
             var response = await httpClient.DeleteAsync(url);
 
             if (response.IsSuccessStatusCode)
@@ -134,7 +135,6 @@
             else
             {
                 errorMessage = await response.Content.ReadAsStringAsync();
-                Console.WriteLine("API Error: " + errorMessage);
             }
         }
         else

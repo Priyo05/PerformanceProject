@@ -1,8 +1,7 @@
 ﻿@page "/employees"
 @layout MainLayout
-@* @inject AuthService authservice *@
 @inject NavigationManager navigator
-@inject HttpClient httpClient
+@inject IHttpClientFactory _httpclientfactory
 
 
 
@@ -62,7 +61,7 @@
 
     </Authorized>
     <NotAuthorized>
-        <p>You are not authorized</p>
+        <Performance.Web.Blazorwasm.Pages.Auth.RedirectLogin></Performance.Web.Blazorwasm.Pages.Auth.RedirectLogin>
     </NotAuthorized>
 </AuthorizeView>
 
@@ -86,7 +85,8 @@
     {
         try
         {
-            var url = $"https://localhost:7058/api/Employee?search={Search}";
+            var httpClient = _httpclientfactory.CreateClient("API");
+            var url = $"api/Employee?search={Search}";
             var response = await httpClient.GetAsync(url);
 
             if (response.IsSuccessStatusCode)
@@ -108,7 +108,6 @@
     private async Task SearchEmployee()
     {
         pageNumber = 1;
-        Console.WriteLine("TEST MASUK GK");
         await LoadData();
     }
 

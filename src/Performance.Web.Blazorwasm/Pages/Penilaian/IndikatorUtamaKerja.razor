@@ -1,76 +1,89 @@
 ﻿@page "/indikatorutamakerja"
-@inject HttpClient httpClient
+@inject IHttpClientFactory _httpclientfactory
 
-
-<div class="card">
-    <div class="card-header">
-        Masukan Employee
-    </div>
-    <EditForm Model="searchViewModel" FormName="Check" OnValidSubmit="CheckUser" class="form-control">
-        <div class="row">
-            <div class="col-md-3">
-                <div class="text_field mb-2">
-                    <label for="name">name</label>
-                    <InputText id="name" class="form-control" @bind-Value="searchViewModel.Name" />
-                    <ValidationMessage For="() => searchViewModel.Name" />
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="text_field mb-2">
-                    <label for="NIK">NIK</label>
-                    <InputText id="NIK" class="form-control" @bind-Value="searchViewModel.NIK" />
-                    <ValidationMessage For="() => searchViewModel.NIK" />
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="text_field mb-2">
-                    <label for="department">Department</label>
-                    <InputText id="department" class="form-control" @bind-Value="searchViewModel.Department" />
-                    <ValidationMessage For="() => searchViewModel.Department" />
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="text_field mb-2">
-                    <label for="periode">Periode</label>
-                    <InputNumber id="periode" class="form-control" @bind-Value="searchViewModel.Periode" />
-                    <ValidationMessage For="() => searchViewModel.Periode" />
-                </div>
-            </div>
-        </div>
-        <DataAnnotationsValidator />
-        @* <ValidationSummary /> *@
-        <button type="submit" class="btn btn-primary mb-1">Search</button>
-    </EditForm>
-</div>
-
-@if (isUserChecked)
-{
-    @if (userExists)
-    {
-        @if (reportExists)
+<AuthorizeView Context="AuthContext">
+    <Authorized>
+        @if (@AuthContext.User.IsInRole("Admin"))
         {
-            <MainIndicatorTable userid="userid" periode="searchViewModel.Periode" />
-            <BasicCompetenceTable userid="userid" periode="searchViewModel.Periode" />
-        }
-        else if (isReportChecked)
-        {
-            <div class="alert alert-danger mt-3">
-                @errorMessage
+            <div class="card">
+                <div class="card-header">
+                    Masukan Employee
+                </div>
+                <EditForm Context="formcontext" Model="searchViewModel" OnValidSubmit="CheckUser" class="form-control">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="text_field mb-2">
+                                <label for="name">name</label>
+                                <InputText id="name" class="form-control" @bind-Value="searchViewModel.Name" />
+                                <ValidationMessage For="() => searchViewModel.Name" />
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="text_field mb-2">
+                                <label for="NIK">NIK</label>
+                                <InputText id="NIK" class="form-control" @bind-Value="searchViewModel.NIK" />
+                                <ValidationMessage For="() => searchViewModel.NIK" />
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="text_field mb-2">
+                                <label for="department">Department</label>
+                                <InputText id="department" class="form-control" @bind-Value="searchViewModel.Department" />
+                                <ValidationMessage For="() => searchViewModel.Department" />
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="text_field mb-2">
+                                <label for="periode">Periode</label>
+                                <InputNumber id="periode" class="form-control" @bind-Value="searchViewModel.Periode" />
+                                <ValidationMessage For="() => searchViewModel.Periode" />
+                            </div>
+                        </div>
+                    </div>
+                    <DataAnnotationsValidator />
+                    @* <ValidationSummary /> *@
+                    <button type="submit" class="btn btn-primary mb-1">Search</button>
+                </EditForm>
             </div>
-            <button class="btn btn-primary" @onclick="CreateReportFirst">Buat Report</button>
-        }
-    }
-    else
-    {
-        <div class="alert alert-danger mt-3">
-            @errorMessage
-        </div>
-    }
 
-}
+            @if (isUserChecked)
+            {
+                @if (userExists)
+                {
+                    @if (reportExists)
+                    {
+                        <MainIndicatorTable userid="userid" periode="searchViewModel.Periode" />
+                        <BasicCompetenceTable userid="userid" periode="searchViewModel.Periode" />
+                    }
+                    else if (isReportChecked)
+                    {
+                        <div class="alert alert-danger mt-3">
+                            @errorMessage
+                        </div>
+                        <button class="btn btn-primary" @onclick="CreateReportFirst">Buat Report</button>
+                    }
+                }
+                else
+                {
+                    <div class="alert alert-danger mt-3">
+                        @errorMessage
+                    </div>
+                }
+
+            }
+        }
+        else
+        {
+            <h1>You are not authorized</h1>
+        }
+    </Authorized>
+    <NotAuthorized>
+        <Performance.Web.Blazorwasm.Pages.Auth.RedirectLogin></Performance.Web.Blazorwasm.Pages.Auth.RedirectLogin>
+    </NotAuthorized>
+</AuthorizeView>
 
 @code {
-    [SupplyParameterFromForm(FormName = "Check")]
+    // [SupplyParameterFromForm(FormName = "Check")]
     public EmployeeSearchViewModel searchViewModel { get; set; } = new();
 
     private int userid { get; set; }
@@ -82,57 +95,72 @@
     private bool isReportChecked { get; set; }
     private string? errorMessage { get; set; }
 
+
     private async Task CheckUser()
     {
-
-        var url = $"https://localhost:7058/GetUser?name={Uri.EscapeDataString(searchViewModel.Name)}&nik={Uri.EscapeDataString(searchViewModel.NIK)}&department={Uri.EscapeDataString(searchViewModel.Department)}";
-
-        var response = await httpClient.GetAsync(url);
-
-        if (response.IsSuccessStatusCode)
+        try
         {
-            var user = await response.Content.ReadFromJsonAsync<Profile>();
 
-            isUserChecked = true;
+            var httpClient = _httpclientfactory.CreateClient("API");
+            var url = $"GetUser?name={Uri.EscapeDataString(searchViewModel.Name)}&nik={Uri.EscapeDataString(searchViewModel.NIK)}&department={Uri.EscapeDataString(searchViewModel.Department)}";
+            var response = await httpClient.GetAsync(url);
 
-
-            if (user != null)
+            if (response.IsSuccessStatusCode)
             {
-                userExists = true;
-                userid = (int)user.UserId;
-                nama = $"{user.FirstName} {user.LastName}";
-                await CheckReport();
+                var user = await response.Content.ReadFromJsonAsync<Profile>();
+
+                isUserChecked = true;
+
+
+                if (user != null)
+                {
+                    userExists = true;
+                    userid = (int)user.UserId;
+                    nama = $"{user.FirstName} {user.LastName}";
+                    await CheckReport();
+                }
+                else
+                {
+                    userExists = false;
+                }
             }
             else
             {
+                isUserChecked = true;
                 userExists = false;
+                errorMessage = await response.Content.ReadAsStringAsync();
             }
         }
-        else
+        catch (Exception ex)
         {
-            isUserChecked = true;
-            userExists = false;
-            var errorContent = await response.Content.ReadAsStringAsync();
-            errorMessage = errorContent;
+            errorMessage = ex.Message;
         }
     }
 
     private async Task CheckReport()
     {
-
-        var url = $"https://localhost:7058/GetAllMainIndicatorUser?userid={userid}&periode={searchViewModel.Periode}";
-
-        var response = await httpClient.GetAsync(url);
-
-        isReportChecked = true;
-
-        if (response.IsSuccessStatusCode)
+        try
         {
-            var mainReport = await response.Content.ReadFromJsonAsync<List<Workmainindicator>>();
+            var httpClient = _httpclientfactory.CreateClient("API");
+            var url = $"GetAllMainIndicatorUser?userid={userid}&periode={searchViewModel.Periode}";
+            var response = await httpClient.GetAsync(url);
 
-            if (mainReport != null && mainReport.Count > 0)
+            isReportChecked = true;
+
+            if (response.IsSuccessStatusCode)
             {
-                reportExists = true;
+                var mainReport = await response.Content.ReadFromJsonAsync<List<Workmainindicator>>();
+
+                if (mainReport != null && mainReport.Count > 0)
+                {
+                    reportExists = true;
+                }
+                else
+                {
+                    reportExists = false;
+                    var errorContent = await response.Content.ReadAsStringAsync();
+                    errorMessage = errorContent;
+                }
             }
             else
             {
@@ -141,30 +169,36 @@
                 errorMessage = errorContent;
             }
         }
-        else
+        catch (Exception ex)
         {
-            reportExists = false;
-            var errorContent = await response.Content.ReadAsStringAsync();
-            errorMessage = errorContent;
+            errorMessage = ex.Message;
         }
 
     }
 
     private async Task CreateReportFirst()
     {
-
-        var url = $"https://localhost:7058/CreateReport/{userid}/{searchViewModel.Periode}";
-        var response = await httpClient.PostAsJsonAsync(url, (userid, searchViewModel.Periode));
-
-        if (response.IsSuccessStatusCode)
+        try
         {
-            reportExists = true;
-            await CheckReport();
+
+            var httpClient = _httpclientfactory.CreateClient("API");
+            var url = $"CreateReport/{userid}/{searchViewModel.Periode}";
+            var response = await httpClient.PostAsJsonAsync(url, (userid, searchViewModel.Periode));
+
+            if (response.IsSuccessStatusCode)
+            {
+                reportExists = true;
+                await CheckReport();
+            }
+            else
+            {
+                errorMessage = await response.Content.ReadAsStringAsync();
+                Console.WriteLine("Error: " + errorMessage);
+            }
         }
-        else
+        catch (Exception ex)
         {
-            errorMessage = await response.Content.ReadAsStringAsync();
-            Console.WriteLine("Error: " + errorMessage);
+            errorMessage = ex.Message;
         }
 
     }

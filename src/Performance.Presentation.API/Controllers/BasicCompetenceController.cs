@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Performance.Presentation.API.Services;
 using Performance.Presentation.API.ViewModels.BasicCompetence;
@@ -7,6 +8,7 @@ using Performance.Presentation.API.ViewModels.MainIndicatorAppraisal;
 namespace Performance.Presentation.API.Controllers;
 [Route("api/[controller]")]
 [ApiController]
+[Authorize(Roles = "Admin")]
 public class BasicCompetenceController : ControllerBase
 {
     private readonly EmployeeService _employeeService;
@@ -19,6 +21,7 @@ public class BasicCompetenceController : ControllerBase
     }
 
     [HttpGet("/GetBasicCompetenceUser")]
+    [Authorize(Roles = "Admin")]
     public IActionResult GetBasicCompetenceUser(int userid, int periode)
     {
         try
@@ -33,12 +36,13 @@ public class BasicCompetenceController : ControllerBase
         }
     }
 
-    [HttpPost("/InsertBasicCompetence")]
-    public IActionResult Insert(BasicCompetenceViewModel viewModel, int userid, int periode)
+    [HttpPut("/BasicCompetenceValue")]
+    [Authorize(Roles = "Admin")]
+    public IActionResult Update(BasicCompetenceViewModel viewModel, int userid, int periode)
     {
         try
         {
-            var insert = _basicCompetenceService.InsertBasicComtence(viewModel, userid, periode);
+            var insert = _basicCompetenceService.UpdateBasicComtence(viewModel, userid, periode);
 
             return Ok(insert);
         }

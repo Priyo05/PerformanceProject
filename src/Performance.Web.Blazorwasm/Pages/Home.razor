@@ -1,7 +1,15 @@
 ﻿@page "/"
 
-<PageTitle>Home</PageTitle>
 
-<h1>Hello, world!</h1>
+<AuthorizeView>
+    <Authorized>
+        <PageTitle>Home</PageTitle>
 
-Welcome to your new app.
+        <h1>Hello, world!</h1>
+
+        Welcome to your new app.
+    </Authorized>
+    <NotAuthorized>
+        <Performance.Web.Blazorwasm.Pages.Auth.RedirectLogin></Performance.Web.Blazorwasm.Pages.Auth.RedirectLogin>
+    </NotAuthorized>
+</AuthorizeView>

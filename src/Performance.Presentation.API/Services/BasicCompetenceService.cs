@@ -31,7 +31,7 @@ public class BasicCompetenceService
         return viewModel;
     }
 
-    public Basiccompetence InsertBasicComtence(BasicCompetenceViewModel viewModel,int userid,int periode)
+    public Basiccompetence UpdateBasicComtence(BasicCompetenceViewModel viewModel,int userid,int periode)
     {
         var getCompetence = _competenceRepository.GetBasicCompetenceUser(userid,periode);
 
