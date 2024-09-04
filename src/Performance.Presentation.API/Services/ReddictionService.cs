@@ -29,6 +29,7 @@ public class ReddictionService
                 IndicatorType = c.IndicatorType,
                 value = (int)c.Value
             }).ToList();
+        //sss
 
         return new ReddictionIndexViewModel
         {
